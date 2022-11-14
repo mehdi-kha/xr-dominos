@@ -102,9 +102,9 @@ Shader "Unlit/Oculus Hand Color URP"
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
-                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_SETUP_INSTANCE_ID(IN);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                UNITY_TRANSFER_INSTANCE_ID(v, OUT);
+                UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
                 OUT.normal = TransformObjectToWorldNormal(IN.normal);
                 float4 vertexPos = TransformObjectToHClip(IN.positionOS.xyz);
                 OUT.positionHCS = vertexPos;

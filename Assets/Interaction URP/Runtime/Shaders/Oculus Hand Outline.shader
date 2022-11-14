@@ -112,9 +112,9 @@ Shader "Unlit/Oculus Hand Outline URP"
             Varyings vert(Attributes IN)
             {
                 Varyings OUT;
-                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_SETUP_INSTANCE_ID(IN);
                 UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                UNITY_TRANSFER_INSTANCE_ID(v, OUT);
+                UNITY_TRANSFER_INSTANCE_ID(IN, OUT);
                 OUT.normal = IN.normal;
                 float4 vertexPos = IN.positionOS;
                 vertexPos.xyz += IN.normal * _OutlineWidth;

@@ -75,3 +75,9 @@ crashlytics-build.properties
 Assets/Resources/OvrAvatarSettings.asset
 Assets/Resources/OculusPlatformSettings.asset
 Assets/Resources/OculusPlatformSettings.asset.meta
+
+# Ignore the Oculus SDK package, it has to be imported manually in order for the repository not to be too big
+/[Aa]ssets/Oculus*
+
+# Ignore the TextMeshPro imported assets
+/[Aa]ssets/TextMesh Pro/*

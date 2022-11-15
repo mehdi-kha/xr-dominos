@@ -1,5 +1,6 @@
+#if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public static class Builder
 {
@@ -9,9 +10,10 @@ public static class Builder
         {
             scenes = new[] { "Assets/Scenes/MainScene.unity" },
             target = BuildTarget.Android,
-            locationPathName = "./Build/",
+            locationPathName = $"{Application.dataPath}/../Build/build.apk",
         };
 
         BuildPipeline.BuildPlayer(options);
     }
 }
+#endif

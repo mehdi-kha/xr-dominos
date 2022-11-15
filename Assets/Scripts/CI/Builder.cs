@@ -3,13 +3,13 @@ using UnityEngine.SceneManagement;
 
 public static class Builder
 {
-    public static void BuildProject(string path, BuildTarget buildTarget)
+    public static void BuildAndroid()
     {
         var options = new BuildPlayerOptions
         {
             scenes = new[] { "Assets/Scenes/MainScene.unity" },
-            target = buildTarget,
-            locationPathName = path,
+            target = BuildTarget.Android,
+            locationPathName = "./Build/",
         };
 
         BuildPipeline.BuildPlayer(options);

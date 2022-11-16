@@ -489,6 +489,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Domino
       objectReference: {fileID: 0}
+    - target: {fileID: 7665534328767522528, guid: 11d659e6919ad5d4fa21a6810e0b69fd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11d659e6919ad5d4fa21a6810e0b69fd, type: 3}
 --- !u!1001 &1881063493
@@ -773,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &5091860642988046566
 GameObject:
   m_ObjectHideFlags: 0

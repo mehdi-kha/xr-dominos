@@ -10,3 +10,6 @@ Some of the Oculus interaction SDK shaders are not compatible with the Universal
 
 # Jenkins
 You can build the project with Jenkins, by calling the methods implemented in the Builder class from the Jenkins Job. See https://fadhilnoer.medium.com/automating-unity-builds-part-1-ba0c60e8d06b for a setup example
+
+# Why are there many rigs?
+I have faced some issues having hand tracking working with the Quest 1 and the new Oculus Interaction SDK / Unity versions. Hence using controllers in Editor for debugging and hands on the device.

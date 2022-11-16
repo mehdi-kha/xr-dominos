@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Oculus/Interaction/Samples/Scenes/BasicPoseDetection.unity
-    guid: 5661873a4cd8ad8469c072d3852197c2
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: eaf0a0b0c9d3561499cb047c4e0742d5
+  - enabled: 0
+    path: Assets/Oculus/Interaction/Samples/Scenes/Features/HandGrab.unity
+    guid: 1ca1035b12c67f24d81e7bc5ad627d76
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 916714763def52e41ab513a34aec4acb, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2d75cbfff75b84c4fb89d3abdbe1087b, type: 2}

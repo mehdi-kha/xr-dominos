@@ -63,6 +63,7 @@ MonoBehaviour:
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
+  _applyBoneTranslations: 1
 --- !u!1 &873135939331662047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,6 +3112,7 @@ MonoBehaviour:
   - {fileID: 2390786741075871820}
   - {fileID: 5849366983228221347}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &2087676753765291400
 GameObject:
@@ -3545,35 +3547,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 2557958639113915752}
   _interactableFilters: []
-  MaxIterationsPerFrame: 3
+  _data: {fileID: 0}
   _pointTransform: {fileID: 2484219297665591136}
+  _radius: 0.005
   _touchReleaseThreshold: 0.002
-  _dragStartCurve:
-    _animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    _animationLength: 1
+  _equalDistanceThreshold: 0.001
 --- !u!114 &947412003017124689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3652,35 +3630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 2557958639410608338}
   _interactableFilters: []
-  MaxIterationsPerFrame: 3
+  _data: {fileID: 0}
   _pointTransform: {fileID: 2484219297895027418}
+  _radius: 0.005
   _touchReleaseThreshold: 0.002
-  _dragStartCurve:
-    _animationCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    _animationLength: 1
+  _equalDistanceThreshold: 0.001
 --- !u!114 &947412002642714347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6925,6 +6879,7 @@ MonoBehaviour:
   - {fileID: 1470961255727332802}
   - {fileID: 8980525644051072960}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &3518977505039035228
 GameObject:
@@ -7158,8 +7113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff26c21ac005534e8af75f8427be9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _snappers:
-  - {fileID: 5849366984612402521}
+  _handGrabState: {fileID: 0}
   _syntheticHand: {fileID: 4928560937041396523}
 --- !u!114 &5515187871538616270
 MonoBehaviour:
@@ -7179,6 +7133,7 @@ MonoBehaviour:
   _glowColorLerpSpeed: 4
   _fingerGlowColorWithInteractable: {r: 1, g: 0.82, b: 0.45, a: 1}
   _fingerGlowColorWithNoInteractable: {r: 0.44, g: 0.56, b: 0.57, a: 1}
+  _fingerGlowColorHover: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &3518977505140447870
 GameObject:
   m_ObjectHideFlags: 0
@@ -14513,6 +14468,7 @@ MonoBehaviour:
   _glowColorLerpSpeed: 4
   _fingerGlowColorWithInteractable: {r: 1, g: 0.82, b: 0.45, a: 1}
   _fingerGlowColorWithNoInteractable: {r: 0.44, g: 0.56, b: 0.57, a: 1}
+  _fingerGlowColorHover: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &7588217973297863895
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14525,8 +14481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff26c21ac005534e8af75f8427be9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _snappers:
-  - {fileID: 2305107853022423506}
+  _handGrabState: {fileID: 0}
   _syntheticHand: {fileID: 7588217972636812078}
 --- !u!1 &3745125947484090702
 GameObject:
@@ -15611,7 +15566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b47e36715521d4e8a30d2c5b6e83e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ovrCameraRig: {fileID: 6433964867773660577}
+  _ovrCameraRig: {fileID: 5745358515200702415}
   _requireOvrHands: 1
 --- !u!114 &1630226040454167106
 MonoBehaviour:
@@ -15689,6 +15644,7 @@ MonoBehaviour:
   _updateRootPose: 0
   _updateRootScale: 1
   _enablePhysicsCapsules: 0
+  _applyBoneTranslations: 1
 --- !u!1 &4253708707802829240
 GameObject:
   m_ObjectHideFlags: 0
@@ -15789,6 +15745,7 @@ MonoBehaviour:
   - {fileID: 2390786741137489019}
   - {fileID: 5849366984166192671}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &4921179446371192844
 GameObject:
@@ -15967,7 +15924,7 @@ GameObject:
   - component: {fileID: 4921450811205662192}
   - component: {fileID: 4921450811211602996}
   - component: {fileID: 5033390114777222000}
-  - component: {fileID: 6433964867773660577}
+  - component: {fileID: 5745358515200702415}
   m_Layer: 0
   m_Name: OVRCameraRig
   m_TagString: Untagged
@@ -16043,6 +16000,10 @@ MonoBehaviour:
   virtualGreenScreenDepthTolerance: 0.2
   mrcActivationMode: 0
   isInsightPassthroughEnabled: 0
+  requestBodyTrackingPermissionOnStartup: 0
+  requestFaceTrackingPermissionOnStartup: 0
+  requestEyeTrackingPermissionOnStartup: 0
+  _localDimming: 0
   _trackingOriginType: 1
   usePositionTracking: 1
   useRotationTracking: 1
@@ -16068,7 +16029,7 @@ MonoBehaviour:
   resetHmdPoseByMiddleMouseButton: 1
   activateKeys: 3201000031010000
   pitchKeys: 3401000033010000
---- !u!114 &6433964867773660577
+--- !u!114 &5745358515200702415
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16077,7 +16038,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4921450811206085072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec18063db08ecf4c8592a467369925f, type: 3}
+  m_Script: {fileID: 11500000, guid: df9f338034892c44ebb62d97894772f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   usePerEyeCameras: 0
@@ -16593,13 +16554,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 2212389857425823282}
   _interactableFilters: []
-  MaxIterationsPerFrame: 3
+  _data: {fileID: 0}
   _hand: {fileID: 2212389857425823282}
   _rigidbody: {fileID: 4954760253932106351}
   _handGrabApi: {fileID: 8593677882036587025}
   _supportedGrabTypes: -1
-  _gripPoint: {fileID: 7588217972768863224}
+  _hoverOnZeroStrength: 0
+  _gripPoint: {fileID: 0}
+  _gripCollider: {fileID: 0}
   _pinchPoint: {fileID: 8480795199055017820}
+  _pinchCollider: {fileID: 0}
   _velocityCalculator: {fileID: 0}
 --- !u!114 &6779760091693835685
 MonoBehaviour:
@@ -16759,13 +16723,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _activeState: {fileID: 2212389858575470765}
   _interactableFilters: []
-  MaxIterationsPerFrame: 3
+  _data: {fileID: 0}
   _hand: {fileID: 2212389858575470765}
   _rigidbody: {fileID: 4954760255214105840}
   _handGrabApi: {fileID: 8593677883320716430}
   _supportedGrabTypes: -1
-  _gripPoint: {fileID: 7588217971617903975}
+  _hoverOnZeroStrength: 0
+  _gripPoint: {fileID: 0}
+  _gripCollider: {fileID: 0}
   _pinchPoint: {fileID: 8480795198058230211}
+  _pinchCollider: {fileID: 0}
   _velocityCalculator: {fileID: 0}
 --- !u!114 &6779760090663461690
 MonoBehaviour:
@@ -16953,6 +16920,7 @@ MonoBehaviour:
   - {fileID: 6948360047507722276}
   - {fileID: 5849366984612402521}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &5833682620834604339
 GameObject:
@@ -19628,6 +19596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: 1
   _animator: {fileID: 7588217972126818281}
+  _allowThumbUp: 2
 --- !u!1 &7588217972117466553
 GameObject:
   m_ObjectHideFlags: 0
@@ -20331,6 +20300,7 @@ MonoBehaviour:
   - {fileID: 8069752313075128527}
   - {fileID: 2305107853918547789}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &7588217972883204888
 GameObject:
@@ -22704,6 +22674,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: 2
   _animator: {fileID: 7588217972935051996}
+  _allowThumbUp: 2
 --- !u!1 &7588217972944419182
 GameObject:
   m_ObjectHideFlags: 0
@@ -23253,6 +23224,7 @@ MonoBehaviour:
   - {fileID: 8069752313248083317}
   - {fileID: 2305107853022423506}
   _interactorComparer: {fileID: 0}
+  _data: {fileID: 0}
   MaxIterationsPerFrame: 3
 --- !u!1 &7588217973583102914
 GameObject:
@@ -24685,8 +24657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff26c21ac005534e8af75f8427be9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _snappers:
-  - {fileID: 8980525644051072960}
+  _handGrabState: {fileID: 0}
   _syntheticHand: {fileID: 6056208386286769207}
 --- !u!114 &2536787752392008859
 MonoBehaviour:
@@ -24706,6 +24677,7 @@ MonoBehaviour:
   _glowColorLerpSpeed: 4
   _fingerGlowColorWithInteractable: {r: 1, g: 0.82, b: 0.45, a: 1}
   _fingerGlowColorWithNoInteractable: {r: 0.44, g: 0.56, b: 0.57, a: 1}
+  _fingerGlowColorHover: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &9018773891846010519
 GameObject:
   m_ObjectHideFlags: 0
@@ -30194,8 +30166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff26c21ac005534e8af75f8427be9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _snappers:
-  - {fileID: 2305107853918547789}
+  _handGrabState: {fileID: 0}
   _syntheticHand: {fileID: 7588217972160516931}
 --- !u!114 &7588217973585045984
 MonoBehaviour:
@@ -30215,6 +30186,7 @@ MonoBehaviour:
   _glowColorLerpSpeed: 4
   _fingerGlowColorWithInteractable: {r: 1, g: 0.82, b: 0.45, a: 1}
   _fingerGlowColorWithNoInteractable: {r: 0.44, g: 0.56, b: 0.57, a: 1}
+  _fingerGlowColorHover: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &9080849230837970598
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7801749036523406210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2812294408839781899}
+  - component: {fileID: 2107458253378869099}
+  - component: {fileID: 481985677095734192}
+  m_Layer: 0
+  m_Name: SpawnablesVolumeCustom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2812294408839781899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801749036523406210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107458253378869099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801749036523406210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab3ec25e32ce0c4380714d75e39cb05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &481985677095734192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801749036523406210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be459a7d52f69342a549e7e1ffa0b02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomLightPrefab: {fileID: 4058753717224557943, guid: 931021efef836d04ebf007a05ec77da5, type: 3}
+  SpawnablePrefabs:
+  - ResizablePrefab: {fileID: 7329915652745048277, guid: 6777a9fcc7e7bcf4c9efc0d667e87144, type: 3}
+    ClassificationLabel: FLOOR
+    _editorClassificationIndex: 0
+  - ResizablePrefab: {fileID: 7329915652745048277, guid: f9507f56f6ea2f748906d143b1f3fb80, type: 3}
+    ClassificationLabel: CEILING
+    _editorClassificationIndex: 1
+  - ResizablePrefab: {fileID: 7329915652745048277, guid: 7b2b0db8586b9ce4ea5aaf09815bf7ad, type: 3}
+    ClassificationLabel: WALL_FACE
+    _editorClassificationIndex: 2
+  - ResizablePrefab: {fileID: 7329915652745048277, guid: 2cc3b5e135e0ed94a8e8286bafd19477, type: 3}
+    ClassificationLabel: DESK
+    _editorClassificationIndex: 3
+  - ResizablePrefab: {fileID: 2973080384943925371, guid: 280fbb5409c2df6478b07c56b0068ef8, type: 3}
+    ClassificationLabel: COUCH
+    _editorClassificationIndex: 4
+  - ResizablePrefab: {fileID: 818735711328189117, guid: 798f6ce67ce12d34a83236ff9c7f496f, type: 3}
+    ClassificationLabel: DOOR_FRAME
+    _editorClassificationIndex: 5
+  - ResizablePrefab: {fileID: 6927193570541543623, guid: c238e897dd5eb08498f05ca953387396, type: 3}
+    ClassificationLabel: WINDOW_FRAME
+    _editorClassificationIndex: 6
+  - ResizablePrefab: {fileID: 7329915652745048277, guid: 8e91ec04a90d2484895e92406cb666a1, type: 3}
+    ClassificationLabel: OTHER
+    _editorClassificationIndex: 7

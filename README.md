@@ -8,3 +8,6 @@ Some of the Oculus interaction SDK shaders are not compatible with the Universal
 
 # Jenkins
 You can build the project with Jenkins, by calling the methods implemented in the Builder class from the Jenkins Job. See https://fadhilnoer.medium.com/automating-unity-builds-part-1-ba0c60e8d06b for a setup example
+
+# Credits
+<a href="https://www.flaticon.com/free-icons/domino" title="domino icons">Domino icons created by Freepik - Flaticon</a>

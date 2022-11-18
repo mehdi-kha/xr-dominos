@@ -1,0 +1,1 @@
+Very important if you want to add a custom mesh! The mesh's read/write permissions must be enabled in order for the bounds to be recalculated by the Oculus plugin's scripts.

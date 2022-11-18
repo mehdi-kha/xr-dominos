@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class SceneSetupAPIController : MonoBehaviour
+public class DefaultTableSpawner : MonoBehaviour
 {
     [SerializeField] private OVRSceneManager _ovrSceneManager;
     [Inject] private ISceneSetupModel _sceneSetupModel;
@@ -11,7 +11,6 @@ public class SceneSetupAPIController : MonoBehaviour
 
     void Awake()
     {
-        _ovrSceneManager.NoSceneModelToLoad += () => _sceneSetupModel.RaiseNoSceneModelToLoad();
         _sceneSetupModel.SkipRoomConfiguration += OnSkipRoomConfiguration;
     }
 

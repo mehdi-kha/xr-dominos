@@ -1,5 +1,4 @@
 using Oculus.Interaction;
-using System;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +16,7 @@ public class SceneSetupMenuController : MonoBehaviour
 
     void Awake()
     {
-        _roomConfigurationModel.NoSceneModelToLoad += OnNoSceneModelToLoad;
+        _roomConfigurationModel.DeskSpawned += OnDeskSpawned;
         _roomConfigurationModel.SkipRoomConfiguration += OnSkipRoomConfiguration;
 
         // Setup buttons
@@ -27,7 +26,7 @@ public class SceneSetupMenuController : MonoBehaviour
 
     void OnDestroy()
     {
-        _roomConfigurationModel.NoSceneModelToLoad -= OnNoSceneModelToLoad;
+        _roomConfigurationModel.DeskSpawned -= OnDeskSpawned;
         _roomConfigurationModel.SkipRoomConfiguration -= OnSkipRoomConfiguration;
 
         _quitButton.WhenPointerEventRaised -= OnQuitButtonEventRaised;
@@ -59,8 +58,8 @@ public class SceneSetupMenuController : MonoBehaviour
         _noRoomConfiguredPanel.SetActive(false);
     }
 
-    private void OnNoSceneModelToLoad()
+    private void OnDeskSpawned()
     {
-        _noRoomConfiguredPanel.SetActive(true);
+        _noRoomConfiguredPanel.SetActive(false);
     }
 }

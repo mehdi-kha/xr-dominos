@@ -8,6 +8,7 @@ public class SceneSetupModel : ISceneSetupModel
 {
     public event Action SkipRoomConfiguration;
     public event Action DeskSpawned;
+    public event Action GameStarted;
 
     public void RaiseSkipRoomConfiguration()
     {
@@ -20,6 +21,11 @@ public class SceneSetupModel : ISceneSetupModel
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #endif
+    }
+
+    public void RaiseGameStarted()
+    {
+        GameStarted?.Invoke();
     }
 
     public SceneSetupModel()

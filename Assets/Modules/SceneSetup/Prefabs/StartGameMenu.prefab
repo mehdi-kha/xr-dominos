@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1938575641385302382}
-  - component: {fileID: 3274040871059527916}
+  - component: {fileID: 4004302726771019912}
   m_Layer: 0
   m_Name: StartGameMenu
   m_TagString: Untagged
@@ -66,7 +66,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3274040871059527916
+--- !u!114 &4004302726771019912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -75,12 +75,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8836679873742746216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f745e7ec7383143b21538032236248, type: 3}
+  m_Script: {fileID: 11500000, guid: dad5c4c660133374e8660e5893a18f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _noRoomConfiguredPanel: {fileID: 6147710099579286282}
-  _quitButton: {fileID: 5150165044641937120}
-  _continueButton: {fileID: 0}
+  _startGameButton: {fileID: 5150165044641937120}
+  _visuals: {fileID: 6147710099579286282}
 --- !u!1001 &6844353687650508108
 PrefabInstance:
   m_ObjectHideFlags: 0

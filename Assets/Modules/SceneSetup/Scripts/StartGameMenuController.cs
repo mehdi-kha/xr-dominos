@@ -14,6 +14,14 @@ public class StartGameMenuController : MenuController
         HideMenu();
     }
 
+    private void OnDestroy()
+    {
+        _sceneSetupModel.DeskDetected -= OnDeskSpawned;
+        _startGameButton.WhenPointerEventRaised -= OnStartGameButtonPointerEvent;
+        _sceneSetupModel.GameStarted -= OnGameStarted;
+        _sceneSetupModel.UserFootprintsStatusChanged -= OnUserFootprintStatusChanged;
+    }
+
     private void OnUserFootprintStatusChanged(bool isUserOnFootprints)
     {
         if (!_sceneSetupModel.HaveDesksBeenDetected)

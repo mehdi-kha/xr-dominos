@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,6 +10,7 @@ public class SceneSetupModel : ISceneSetupModel
     private bool _isUserOnFootsteps;
     private Transform _userHead;
     [SerializeField] private string _defaultPlayerHeadTag = "MainCamera";
+    private List<DeskController> _deskControllers = new();
     public bool IsUserOnFootsteps
     { 
         get => _isUserOnFootsteps; 
@@ -62,14 +64,22 @@ public class SceneSetupModel : ISceneSetupModel
     public void RaiseGameStarted()
     {
         GameStarted?.Invoke();
+
+        // It's complicated to inject this model into the DeskController, since the prefabs are spawned by the Oculus API.
+        // Hence exceptionally calling the controller's methods here
+        foreach(var deskController in _deskControllers)
+        {
+            deskController.Show();
+        }
     }
 
     public SceneSetupModel()
     {
-        DeskSpawnedRaiser.DeskSpawned += () =>
+        DeskController.DeskSpawned += (deskController) =>
         {
             DeskDetected.Invoke();
             HaveDesksBeenDetected = true;
+            _deskControllers.Add(deskController);
         };
     }
 }

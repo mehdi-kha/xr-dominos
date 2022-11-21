@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -13,11 +14,18 @@ public class FootstepsController : MonoBehaviour
     private void Awake()
     {
         _colorWhenUserNotOver = _footPrintsMaterial.color;
+        _sceneSetupModel.GameStarted += OnGameStarted;
+    }
+
+    private void OnGameStarted()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         _footPrintsMaterial.color = _colorWhenUserNotOver;
+        _sceneSetupModel.GameStarted -= OnGameStarted;
     }
 
     private void OnTriggerEnter(Collider collision)

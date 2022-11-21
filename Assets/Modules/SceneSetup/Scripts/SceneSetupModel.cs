@@ -11,6 +11,7 @@ public class SceneSetupModel : ISceneSetupModel
     private Transform _userHead;
     [SerializeField] private string _defaultPlayerHeadTag = "MainCamera";
     private List<DeskController> _deskControllers = new();
+    private bool _hasGameStarted;
     public bool IsUserOnFootsteps
     { 
         get => _isUserOnFootsteps; 
@@ -43,8 +44,26 @@ public class SceneSetupModel : ISceneSetupModel
         } 
     }
 
+    public bool HasGameStarted
+    {
+        get => _hasGameStarted;
+        set
+        {
+            _hasGameStarted = value;
+
+            GameStarted?.Invoke();
+
+            // It's complicated to inject this model into the DeskController, since the prefabs are spawned by the Oculus API.
+            // Hence exceptionally calling the controller's methods here
+            foreach (var deskController in _deskControllers)
+            {
+                deskController.Show();
+            }
+        }
+    }
+
     public event Action SkipRoomConfiguration;
-    public event Action DeskDetected;
+    public event Action<DeskController> DeskDetected;
     public event Action GameStarted;
     public event Action<bool> UserFootprintsStatusChanged;
 
@@ -61,23 +80,11 @@ public class SceneSetupModel : ISceneSetupModel
 #endif
     }
 
-    public void RaiseGameStarted()
-    {
-        GameStarted?.Invoke();
-
-        // It's complicated to inject this model into the DeskController, since the prefabs are spawned by the Oculus API.
-        // Hence exceptionally calling the controller's methods here
-        foreach(var deskController in _deskControllers)
-        {
-            deskController.Show();
-        }
-    }
-
     public SceneSetupModel()
     {
         DeskController.DeskSpawned += (deskController) =>
         {
-            DeskDetected.Invoke();
+            DeskDetected?.Invoke(deskController);
             HaveDesksBeenDetected = true;
             _deskControllers.Add(deskController);
         };

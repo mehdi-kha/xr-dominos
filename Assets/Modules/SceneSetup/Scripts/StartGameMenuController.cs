@@ -51,10 +51,10 @@ public class StartGameMenuController : MenuController
             return;
         }
 
-        _sceneSetupModel.RaiseGameStarted();
+        _sceneSetupModel.HasGameStarted = true;
     }
 
-    private void OnDeskSpawned()
+    private void OnDeskSpawned(DeskController deskController)
     {
         if (!_sceneSetupModel.HaveDesksBeenDetected)
         {

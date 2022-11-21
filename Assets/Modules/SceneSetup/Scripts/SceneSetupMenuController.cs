@@ -58,7 +58,7 @@ public class SceneSetupMenuController : MenuController
         HideMenu();
     }
 
-    private void OnDeskSpawned()
+    private void OnDeskSpawned(DeskController deskController)
     {
         HideMenu();
     }

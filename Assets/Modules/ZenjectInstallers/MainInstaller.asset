@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219f26be9ca75254e99e576352d0d58c, type: 3}
   m_Name: MainInstaller
   m_EditorClassIdentifier: 
+  BowlPrefab: {fileID: 1231275190471334593, guid: 85082c2381f27284ca7b77756b19f5db, type: 3}

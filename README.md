@@ -11,3 +11,5 @@ You can build the project with Jenkins, by calling the methods implemented in th
 
 # Credits
 <a href="https://www.flaticon.com/free-icons/domino" title="domino icons">Domino icons created by Freepik - Flaticon</a>
+
+"Gold medieval bowl (Low-poly, game-ready)" (https://skfb.ly/ovWFF) by Delandi is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).

@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 7066736112352220892}
   - component: {fileID: 7066736112352220886}
   - component: {fileID: 7171041059961356690}
+  - component: {fileID: 1291695464895081732}
   m_Layer: 0
   m_Name: OVRCameraRigCustom
   m_TagString: Untagged
@@ -466,6 +467,18 @@ MonoBehaviour:
   resetHmdPoseByMiddleMouseButton: 1
   activateKeys: 3201000031010000
   pitchKeys: 3401000033010000
+--- !u!114 &1291695464895081732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7066736112357712690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9079ab3a5f0684d8d0aebd5f600635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7066736112357712692
 GameObject:
   m_ObjectHideFlags: 0

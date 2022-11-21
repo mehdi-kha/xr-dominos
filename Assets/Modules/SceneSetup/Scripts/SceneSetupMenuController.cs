@@ -1,8 +1,7 @@
 using Oculus.Interaction;
 using UnityEngine;
-using Zenject;
 
-public class SceneSetupMenuController : MonoBehaviour
+public class SceneSetupMenuController : MenuController
 {
     [Header("No room configured")]
     [SerializeField] private GameObject _noRoomConfiguredPanel;
@@ -12,22 +11,23 @@ public class SceneSetupMenuController : MonoBehaviour
     /// </summary>
     [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _quitButton;
     [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _continueButton;
-    [Inject] private ISceneSetupModel _roomConfigurationModel;
 
     void Awake()
     {
-        _roomConfigurationModel.DeskSpawned += OnDeskSpawned;
-        _roomConfigurationModel.SkipRoomConfiguration += OnSkipRoomConfiguration;
+        _sceneSetupModel.DeskDetected += OnDeskSpawned;
+        _sceneSetupModel.SkipRoomConfiguration += OnSkipRoomConfiguration;
 
         // Setup buttons
         _quitButton.WhenPointerEventRaised += OnQuitButtonEventRaised;
         _continueButton.WhenPointerEventRaised += OnContinueButtonEventRaised;
+
+        MakeHeightMatchUserHeight();
     }
 
     void OnDestroy()
     {
-        _roomConfigurationModel.DeskSpawned -= OnDeskSpawned;
-        _roomConfigurationModel.SkipRoomConfiguration -= OnSkipRoomConfiguration;
+        _sceneSetupModel.DeskDetected -= OnDeskSpawned;
+        _sceneSetupModel.SkipRoomConfiguration -= OnSkipRoomConfiguration;
 
         _quitButton.WhenPointerEventRaised -= OnQuitButtonEventRaised;
         _continueButton.WhenPointerEventRaised -= OnContinueButtonEventRaised;
@@ -40,7 +40,7 @@ public class SceneSetupMenuController : MonoBehaviour
             return;
         }
 
-        _roomConfigurationModel.CloseApp();
+        _sceneSetupModel.CloseApp();
     }
 
     private void OnContinueButtonEventRaised(PointerEvent obj)
@@ -50,16 +50,16 @@ public class SceneSetupMenuController : MonoBehaviour
             return;
         }
 
-        _roomConfigurationModel.RaiseSkipRoomConfiguration();
+        _sceneSetupModel.RaiseSkipRoomConfiguration();
     }
 
     private void OnSkipRoomConfiguration()
     {
-        _noRoomConfiguredPanel.SetActive(false);
+        HideMenu();
     }
 
     private void OnDeskSpawned()
     {
-        _noRoomConfiguredPanel.SetActive(false);
+        HideMenu();
     }
 }

@@ -7,20 +7,44 @@ using UnityEngine;
 public class SceneSetupModel : ISceneSetupModel
 {
     private bool _isUserOnFootsteps;
+    private Transform _userHead;
+    [SerializeField] private string _defaultPlayerHeadTag = "MainCamera";
     public bool IsUserOnFootsteps
     { 
         get => _isUserOnFootsteps; 
         set
         {
             _isUserOnFootsteps = value;
-            UserFootstepsStatusChanged?.Invoke(value);
+            UserFootprintsStatusChanged?.Invoke(value);
         }
     }
 
+    public bool HaveDesksBeenDetected { get; private set; }
+    public Transform UserHead
+    { 
+        get 
+        {
+            if (_userHead == null)
+            {
+                var foundUserHead = GameObject.FindGameObjectWithTag(_defaultPlayerHeadTag);
+                if (foundUserHead == null)
+                {
+                    throw new NullReferenceException($"{nameof(SceneSetupModel)}: No gameobject with the tag {_defaultPlayerHeadTag} could be found when assigning UserHead");
+                }
+                _userHead = foundUserHead.transform;
+            }
+            return _userHead;
+        } 
+        set 
+        {
+            _userHead = value;
+        } 
+    }
+
     public event Action SkipRoomConfiguration;
-    public event Action DeskSpawned;
+    public event Action DeskDetected;
     public event Action GameStarted;
-    public event Action<bool> UserFootstepsStatusChanged;
+    public event Action<bool> UserFootprintsStatusChanged;
 
     public void RaiseSkipRoomConfiguration()
     {
@@ -42,6 +66,10 @@ public class SceneSetupModel : ISceneSetupModel
 
     public SceneSetupModel()
     {
-        DeskSpawnedRaiser.DeskSpawned += () => DeskSpawned.Invoke();
+        DeskSpawnedRaiser.DeskSpawned += () =>
+        {
+            DeskDetected.Invoke();
+            HaveDesksBeenDetected = true;
+        };
     }
 }

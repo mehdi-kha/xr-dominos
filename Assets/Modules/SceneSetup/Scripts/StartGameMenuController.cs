@@ -2,22 +2,38 @@ using Oculus.Interaction;
 using UnityEngine;
 using Zenject;
 
-public class StartGameMenuController : MonoBehaviour
+public class StartGameMenuController : MenuController
 {
-    [Inject] private ISceneSetupModel _sceneSetupModel;
     [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _startGameButton;
-    [SerializeField] private GameObject _visuals;
     private void Awake()
     {
-        _sceneSetupModel.DeskSpawned += OnDeskSpawned;
+        _sceneSetupModel.DeskDetected += OnDeskSpawned;
         _startGameButton.WhenPointerEventRaised += OnStartGameButtonPointerEvent;
         _sceneSetupModel.GameStarted += OnGameStarted;
-        _visuals.SetActive(false);
+        _sceneSetupModel.UserFootprintsStatusChanged += OnUserFootprintStatusChanged;
+        HideMenu();
+    }
+
+    private void OnUserFootprintStatusChanged(bool isUserOnFootprints)
+    {
+        if (!_sceneSetupModel.HaveDesksBeenDetected)
+        {
+            _visuals.SetActive(false);
+            return;
+        }
+
+        if (!isUserOnFootprints)
+        {
+            HideMenu();
+            return;
+        }
+
+        ShowMenu();
     }
 
     private void OnGameStarted()
     {
-        _visuals.SetActive(false);
+        HideMenu();
     }
 
     private void OnStartGameButtonPointerEvent(PointerEvent obj)
@@ -32,6 +48,12 @@ public class StartGameMenuController : MonoBehaviour
 
     private void OnDeskSpawned()
     {
-        _visuals.SetActive(true);
+        if (!_sceneSetupModel.HaveDesksBeenDetected)
+        {
+            _visuals.SetActive(false);
+            return;
+        }
+
+        ShowMenu();
     }
 }

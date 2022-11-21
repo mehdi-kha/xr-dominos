@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93f745e7ec7383143b21538032236248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _visuals: {fileID: 3136422701475643931}
   _noRoomConfiguredPanel: {fileID: 3136422701475643931}
   _quitButton: {fileID: 4156485753811519473}
   _continueButton: {fileID: 7553742528075062223}

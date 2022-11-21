@@ -7,7 +7,7 @@ public abstract class MenuController : MonoBehaviour
     [SerializeField] protected GameObject _visuals;
     [SerializeField] protected float _heightOffsetUserHeadMenu = 0.2f;
 
-    protected void ShowMenu()
+    protected virtual void ShowMenu()
     {
         MakeHeightMatchUserHeight();
 

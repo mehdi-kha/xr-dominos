@@ -7,5 +7,6 @@ public class MainInstaller : ScriptableObjectInstaller<MainInstaller>
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<SceneSetupModel>().AsSingle();
+        Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
     }
 }

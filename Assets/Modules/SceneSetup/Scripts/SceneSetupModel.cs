@@ -6,9 +6,21 @@ using UnityEngine;
 
 public class SceneSetupModel : ISceneSetupModel
 {
+    private bool _isUserOnFootsteps;
+    public bool IsUserOnFootsteps
+    { 
+        get => _isUserOnFootsteps; 
+        set
+        {
+            _isUserOnFootsteps = value;
+            UserFootstepsStatusChanged?.Invoke(value);
+        }
+    }
+
     public event Action SkipRoomConfiguration;
     public event Action DeskSpawned;
     public event Action GameStarted;
+    public event Action<bool> UserFootstepsStatusChanged;
 
     public void RaiseSkipRoomConfiguration()
     {

@@ -1206,6 +1206,14 @@ PrefabInstance:
       propertyPath: _hand
       value: 
       objectReference: {fileID: 165264609871175640}
+    - target: {fileID: 7147530562734519488, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
+      propertyPath: _sampleFrequency
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147530562734519489, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
+      propertyPath: _bufferingParams.SampleFrequency
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 7147530562734519490, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
       propertyPath: m_Name
       value: HandVelocityCalculator
@@ -2269,6 +2277,14 @@ PrefabInstance:
       propertyPath: _hand
       value: 
       objectReference: {fileID: 4547912261153210721}
+    - target: {fileID: 7147530562734519488, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
+      propertyPath: _sampleFrequency
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 7147530562734519489, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
+      propertyPath: _bufferingParams.SampleFrequency
+      value: 72
+      objectReference: {fileID: 0}
     - target: {fileID: 7147530562734519490, guid: 2487a3ae4f1630d439ce4a3e9ac03c7b, type: 3}
       propertyPath: m_Name
       value: HandVelocityCalculator

@@ -1,3 +1,4 @@
+using Oculus.Interaction;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,14 +45,6 @@ public class BowlController : MonoBehaviour
         {
             _dominoPool.Get();
         }
-
-        var allColliders = GameObject.FindObjectsOfType<Collider>();
-        var allCollidersString = "";
-        foreach (var foundCollider in allColliders)
-        {
-            allCollidersString += $"{foundCollider.gameObject.name} - ";
-        }
-        Debug.Log($"The colliders {allCollidersString}");
     }
 
     private GameObject CreateDomino()
@@ -72,6 +65,15 @@ public class BowlController : MonoBehaviour
         // hence updating the dictionary of dominos in the bowl here as well
         var dominosCollider = domino.GetComponentInChildren<Collider>();
         _dominosInBowl[dominosCollider.GetInstanceID()] = dominosCollider;
+        domino.GetComponent<Grabbable>().WhenPointerEventRaised += (a) =>
+        {
+            if (a.Type == PointerEventType.Select)
+            {
+                domino.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                domino.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                
+            }
+        };
     }
 
     private Vector3 RandomizeSpawningPosition(Vector3 spawningPosition)

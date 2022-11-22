@@ -26,7 +26,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2366596178194405160, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2752802279300284902, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
       propertyPath: m_RootOrder
@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4344778147170003030, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
+      propertyPath: _handAligment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4393072018804482552, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
       propertyPath: m_TagString
       value: Domino
@@ -107,6 +111,10 @@ PrefabInstance:
     - target: {fileID: 8881822405424783726, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
       propertyPath: m_TagString
       value: Domino
+      objectReference: {fileID: 0}
+    - target: {fileID: 9006674674234386868, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9006674674234386868, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
       propertyPath: m_TagString

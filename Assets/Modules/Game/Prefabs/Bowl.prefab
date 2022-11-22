@@ -51,7 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visuals: {fileID: 8778144455472975914}
   _triggerCollider: {fileID: 1349812383760013879}
-  _dominoPrefab: {fileID: 7009188128920083184, guid: 6016f2ddc8f32d64d88027ee8e73d54c, type: 3}
+  _dominoPrefab: {fileID: 1807350511420674344, guid: b40c01843778b2446b1d3dcd5e5fdc8f, type: 3}
   _dominoTag: Domino
   _dominoSpawningSpot: {fileID: 5467640740002173922}
   _addRandomnessAroundTheSpawningSpot: 1

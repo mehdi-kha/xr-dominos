@@ -29,5 +29,7 @@ public class BowlsSpawner : MonoBehaviour
         yield return _waitForEndOfFrame;
         bowlController.transform.parent = deskController.transform;
         bowlController.transform.localPosition = deskController.GetBowlSpawningLocalPosition();
+        bowlController.transform.parent = null;
+        bowlController.transform.position += Vector3.up * 0.1f;
     }
 }

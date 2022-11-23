@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1231275190471334594}
   - component: {fileID: 8758068304435512785}
-  - component: {fileID: 1349812383760013879}
   - component: {fileID: 648619395397185618}
   - component: {fileID: 2850387325295550376}
   m_Layer: 0
@@ -50,26 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visuals: {fileID: 8778144455472975914}
-  _triggerCollider: {fileID: 1349812383760013879}
+  _triggerCollider: {fileID: 0}
   _dominoPrefab: {fileID: 7009188128920083184, guid: 6016f2ddc8f32d64d88027ee8e73d54c, type: 3}
   _dominoTag: Domino
   _dominoSpawningSpot: {fileID: 5467640740002173922}
   _addRandomnessAroundTheSpawningSpot: 1
   _spawningRandomnessRadius: 0.05
   _minimumNumberOfDominosInBowl: 10
---- !u!65 &1349812383760013879
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1231275190471334593}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.2, z: 0.3}
-  m_Center: {x: 0, y: 0.080637686, z: 0}
 --- !u!54 &648619395397185618
 Rigidbody:
   m_ObjectHideFlags: 0

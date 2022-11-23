@@ -9,8 +9,6 @@ public class BowlController : MonoBehaviour
 {
     [Inject] private ISceneSetupModel _sceneSetupModel;
     [SerializeField] private GameObject _visuals;
-    [Tooltip("Very probably a box collider that is a trigger. Whenever a domino leaves this collider, a new one is spawned")]
-    [SerializeField] private Collider _triggerCollider;
     [SerializeField] private GameObject _dominoPrefab;
     [SerializeField] private string _dominoTag = "Domino";
     [SerializeField] private Transform _dominoSpawningSpot;
@@ -18,11 +16,9 @@ public class BowlController : MonoBehaviour
     [SerializeField] private bool _addRandomnessAroundTheSpawningSpot = true;
     [Tooltip("Only relevant is spawning randomness is enabled. Max distance from the defined spawning spot.")]
     [SerializeField] private float _spawningRandomnessRadius = 0.05f;
-    [SerializeField] private int _minimumNumberOfDominosInBowl = 10;
+    [SerializeField] private int _numberOfDominosToSpawn = 10;
 
     private ObjectPool<GameObject> _dominoPool;
-    // Using a dictionary to avoid registering a domino instance twice by mistake.
-    private Dictionary<int, Collider> _dominosInBowl = new();
 
     private void Awake()
     {
@@ -33,15 +29,11 @@ public class BowlController : MonoBehaviour
         }
 
         _sceneSetupModel.GameStarted += OnGameStarted;
-        if (_triggerCollider == null || !_triggerCollider.isTrigger)
-        {
-            throw new Exception($"{nameof(BowlController)}: Either the trigger collider is not assigned, or it's not of type trigger");
-        }
     }
 
     private void PopulateBowl()
     {
-        while(_dominosInBowl.Count < _minimumNumberOfDominosInBowl)
+        for(int i = 0; i < _numberOfDominosToSpawn; i++)
         {
             _dominoPool.Get();
         }
@@ -60,11 +52,6 @@ public class BowlController : MonoBehaviour
             dominoPosition = RandomizeSpawningPosition(dominoPosition);
         }
         domino.transform.position = dominoPosition;
-
-        // OnTriggerEnter won't be called if spawning happens during Awake() or Start() for example
-        // hence updating the dictionary of dominos in the bowl here as well
-        var dominosCollider = domino.GetComponentInChildren<Collider>();
-        _dominosInBowl[dominosCollider.GetInstanceID()] = dominosCollider;
     }
 
     private Vector3 RandomizeSpawningPosition(Vector3 spawningPosition)
@@ -90,26 +77,5 @@ public class BowlController : MonoBehaviour
     {
         _visuals.SetActive(true);
         PopulateBowl();
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.tag != _dominoTag)
-        {
-            return;
-        }
-
-        _dominosInBowl.Remove(other.GetInstanceID());
-        PopulateBowl();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag != _dominoTag)
-        {
-            return;
-        }
-
-        _dominosInBowl[other.GetInstanceID()] = other;
     }
 }

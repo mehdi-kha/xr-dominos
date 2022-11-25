@@ -9,29 +9,40 @@ using UnityEngine;
 public class DeskController : MonoBehaviour
 {
     public static event Action<DeskController> DeskSpawned;
+    public event Action SetupDone;
+
+    /// <summary>
+    ///     The world position of the point at the center on the top of the desk;
+    /// </summary>
+    public Vector3 CenterTopPosition => transform.position + _boxCollider.bounds.extents.y * transform.up;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private float _distanceFromDeskEdge = 0.1f;
     [SerializeField] MeshFilter _meshFilter;
     [SerializeField] BoxCollider _boxCollider;
+    [SerializeField] NonPlayableDominoFallingDector _nonPlayableDominoFallingDetectorPrefab;
+    [Tooltip("The y offset applied to the non playable domino falling detector.")]
+    [SerializeField] float _detectorHeightOffset = 0.09f;
 
     private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
+    private NonPlayableDominoFallingDector _nonPlayableDominoFallingDetector;
 
     void Awake()
     {
         DeskSpawned?.Invoke(this);
-        StartCoroutine(SetBoxColliderAfterEndOfFrame());
-        Hide();
+        StartCoroutine(SetupDeskAfterEndOfFrame());
+        HideDeskAndDisableDominoFallingDetector();
     }
 
-    public void Show()
+    public void ShowDesk()
     {
         // TODO maybe an animation would be better
         _renderer.enabled = true;
     }
 
-    public void Hide()
+    public void HideDeskAndDisableDominoFallingDetector()
     {
         _renderer.enabled = false;
+        DisableDominoFallingDetector();
     }
 
     /// <summary>
@@ -60,10 +71,34 @@ public class DeskController : MonoBehaviour
     ///     Do this at the end of the frame to make sure the Oculus SDK has finished generating the table's mesh
     /// </summary>
     /// <returns></returns>
-    private IEnumerator SetBoxColliderAfterEndOfFrame()
+    private IEnumerator SetupDeskAfterEndOfFrame()
     {
         yield return _waitForEndOfFrame;
         _boxCollider.center = _meshFilter.mesh.bounds.center;
         _boxCollider.size = _meshFilter.mesh.bounds.size;
+        SetupDominoFallingDetector();
+        SetupDone?.Invoke();
+    }
+
+    private void SetupDominoFallingDetector()
+    {
+        if (_nonPlayableDominoFallingDetector == null)
+        {
+            _nonPlayableDominoFallingDetector = Instantiate(_nonPlayableDominoFallingDetectorPrefab, transform);
+            var detectorBoxCollider = _nonPlayableDominoFallingDetector.GetComponent<BoxCollider>();
+            detectorBoxCollider.center = _boxCollider.center + Vector3.up * _detectorHeightOffset;
+            detectorBoxCollider.size = _boxCollider.size;
+        }
+        _nonPlayableDominoFallingDetector.gameObject.SetActive(true);
+    }
+
+    private void DisableDominoFallingDetector()
+    {
+        if (_nonPlayableDominoFallingDetector == null)
+        {
+            return;
+        }
+
+        _nonPlayableDominoFallingDetector.gameObject.SetActive(false);
     }
 }

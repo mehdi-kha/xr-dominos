@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
-public class FallingDominoDetector : MonoBehaviour
+public class NonPlayableDominoFallingDector : MonoBehaviour
 {
     [SerializeField] private string _nonPlayableDominoTag = "NonPlayableDomino";
+    [Inject] private IGameModel _gameModel;
+
     /// <summary>
     ///     Contains the non playable dominos. The value is true if the domino has fallen.
     /// </summary>
@@ -17,6 +20,8 @@ public class FallingDominoDetector : MonoBehaviour
         }
 
         _fallenDominos[other.GetHashCode()] = true;
+
+        _gameModel.HasAtLeastOneNonPlayableDominoFallen = true;
 
         if (_fallenDominos.All(a => a.Value))
         {

@@ -156,6 +156,8 @@ MonoBehaviour:
   _distanceFromDeskEdge: 0.1
   _meshFilter: {fileID: 4251060097223836053}
   _boxCollider: {fileID: 4306916747073926369}
+  _nonPlayableDominoFallingDetectorPrefab: {fileID: 1511962061637651077, guid: 5d74475700eb19645aacd4884ac78ab4, type: 3}
+  _detectorHeightOffset: 0.09
 --- !u!65 &4306916747073926369
 BoxCollider:
   m_ObjectHideFlags: 0

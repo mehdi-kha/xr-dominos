@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.Splines;
 using Zenject;
 
 public class NonPlayableDominosSpawner : MonoBehaviour
 {
-    [SerializeField] private SplineContainer _splineContainer;
+    [SerializeField] private SplineContainer _splineContainerPrefab;
     [SerializeField] private GameObject _nonPlayableDominoPrefab;
     [SerializeField] private float _distanceBetweenDominos = 0.05f;
     [Inject] private ISceneSetupModel _sceneSetupModel;
@@ -15,12 +16,29 @@ public class NonPlayableDominosSpawner : MonoBehaviour
 
     private float _splineLength;
     private float _relativeDistanceBetweenDominos;
+    private SplineContainer _spline;
 
     private void Awake()
     {
+        // TODO in general improve this to be more flexible and be able to spawn different types of splines
+        // Maybe even randomly generate a spline on the desk?
+        _sceneSetupModel.DeskDetected += OnDeskDetected;
         _sceneSetupModel.GameStarted += OnGameStarted;
-        _splineLength = _splineContainer.CalculateLength();
+        _splineLength = _splineContainerPrefab.CalculateLength();
         _relativeDistanceBetweenDominos = _distanceBetweenDominos / _splineLength;
+    }
+
+    private void OnDeskDetected(DeskController deskController)
+    {
+        deskController.SetupDone += () => OnDeskSetupDone(deskController);
+    }
+
+    private void OnDeskSetupDone(DeskController deskController)
+    {
+        // Spawn spline on top of the desk
+        _spline = Instantiate(_splineContainerPrefab, deskController.transform);
+        // Position the spline on top of the desk
+        _spline.transform.position += deskController.CenterTopPosition - deskController.transform.position;
     }
 
     private void OnGameStarted()
@@ -33,7 +51,7 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         float currentRelativePosition = 0;
         while (currentRelativePosition < 1)
         {
-            _splineContainer.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
+            _spline.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
             var domino = Instantiate(_nonPlayableDominoPrefab);
             // TODO add a non playable tag for this domino
             domino.transform.position = worldPosition;

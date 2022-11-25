@@ -57,7 +57,7 @@ public class SceneSetupModel : ISceneSetupModel
             // Hence exceptionally calling the controller's methods here
             foreach (var deskController in _deskControllers)
             {
-                deskController.Show();
+                deskController.ShowDesk();
             }
         }
     }

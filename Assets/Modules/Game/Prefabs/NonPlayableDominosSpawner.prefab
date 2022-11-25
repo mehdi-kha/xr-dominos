@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71eea549c7a8a74680a4afdce2378c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _splineContainerPrefab: {fileID: 7497959400460165500, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+  _splineContainerPrefab: {fileID: 1781270059760212239, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
   _nonPlayableDominoPrefab: {fileID: 1704727383277259978, guid: 4efb00c1a8217004da44365589c245b8, type: 3}
   _distanceBetweenDominos: 0.05
   _holeStartRelativeDistance: 0.4

@@ -13,6 +13,7 @@ public class NonPlayableDominosSpawner : MonoBehaviour
     [SerializeField] private float _holeStartRelativeDistance = 0.4f;
     [Range(0, 1)]
     [SerializeField] private float _holeEndRelativeDistance = 0.6f;
+    [SerializeField] private float _verticalSpawningOffset = 0.05f;
 
     private float _splineLength;
     private float _relativeDistanceBetweenDominos;
@@ -39,6 +40,10 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         _spline = Instantiate(_splineContainerPrefab, deskController.transform);
         // Position the spline on top of the desk
         _spline.transform.position += deskController.CenterTopPosition - deskController.transform.position;
+        // Add offset
+        _spline.transform.localPosition += _verticalSpawningOffset * transform.up;
+        // Adapt the spline to match the table
+        _spline.transform.localScale = deskController.Bounds.size;
     }
 
     private void OnGameStarted()
@@ -53,7 +58,6 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         {
             _spline.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
             var domino = Instantiate(_nonPlayableDominoPrefab);
-            // TODO add a non playable tag for this domino
             domino.transform.position = worldPosition;
             domino.transform.LookAt(worldPosition + tangent, upVector);
             currentRelativePosition += _relativeDistanceBetweenDominos;

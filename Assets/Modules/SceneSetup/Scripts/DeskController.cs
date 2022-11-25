@@ -15,6 +15,7 @@ public class DeskController : MonoBehaviour
     ///     The world position of the point at the center on the top of the desk;
     /// </summary>
     public Vector3 CenterTopPosition => transform.position + _boxCollider.bounds.extents.y * transform.up;
+    public Bounds Bounds => _meshFilter.mesh.bounds;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private float _distanceFromDeskEdge = 0.1f;
     [SerializeField] MeshFilter _meshFilter;

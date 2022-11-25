@@ -58,4 +58,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b878b6675855e5d4091747b381925832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dominoTag: Domino
+  _nonPlayableDominoTag: NonPlayableDomino

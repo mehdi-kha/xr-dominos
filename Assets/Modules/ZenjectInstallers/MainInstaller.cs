@@ -5,10 +5,12 @@ using Zenject;
 public class MainInstaller : ScriptableObjectInstaller<MainInstaller>
 {
     public GameObject BowlPrefab;
+    public GameObject NonPlayableDominoFallingDetectorPrefab;
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<SceneSetupModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
         Container.BindFactory<BowlController, BowlFactory>().FromComponentInNewPrefab(BowlPrefab);
+        Container.BindFactory<NonPlayableDominoFallingDetector, NonPlayableDominoFallingDetectorFactory>().FromComponentInNewPrefab(NonPlayableDominoFallingDetectorPrefab);
     }
 }

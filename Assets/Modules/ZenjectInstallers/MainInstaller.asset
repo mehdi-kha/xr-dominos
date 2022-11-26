@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: MainInstaller
   m_EditorClassIdentifier: 
   BowlPrefab: {fileID: 1231275190471334593, guid: 85082c2381f27284ca7b77756b19f5db, type: 3}
+  NonPlayableDominoFallingDetectorPrefab: {fileID: 1511962061637651072, guid: 5d74475700eb19645aacd4884ac78ab4, type: 3}

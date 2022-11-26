@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class NonPlayableDominoFallingDector : MonoBehaviour
+public class NonPlayableDominoFallingDetector : MonoBehaviour
 {
     [SerializeField] private string _nonPlayableDominoTag = "NonPlayableDomino";
     [Inject] private IGameModel _gameModel;

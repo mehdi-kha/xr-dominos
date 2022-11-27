@@ -62,6 +62,7 @@ public class NonPlayableDominoFallingDetector : MonoBehaviour
         if (_countdown <= 0)
         {
             _gameModel.IsFallingCountdownFinished = true;
+            _isCountdownRunning = false;
         }
     }
 }

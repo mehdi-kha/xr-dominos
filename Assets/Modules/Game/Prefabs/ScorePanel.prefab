@@ -185,6 +185,8 @@ MonoBehaviour:
   _restartButton: {fileID: 3741918532117916223}
   _continueButton: {fileID: 5568372039359873448}
   _quitGameButton: {fileID: 1217968964253501258}
+  _scoreText: {fileID: 444098025820520351}
+  _scorePrefixText: 'Current score: '
 --- !u!1 &6478961654320989384
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class GameModel : IGameModel
     private bool _hasFirstNonPlayableDominoFallen;
     private bool _isFallingCountdownFinished;
     private bool _haveAllNonPlayableDominosFallenDown;
+    private int _currentScore;
     public GameMode CurrentGameMode
     {
         get => _currentGameMode;
@@ -58,8 +59,50 @@ public class GameModel : IGameModel
         }
     }
 
+    public int CurrentScore
+    { 
+        get => _currentScore;
+        set
+        {
+            CurrentScoreChanged?.Invoke(value);
+            _currentScore = value;
+        }
+    }
+
     public event Action<GameMode> GameModeChanged;
     public event Action FirstNonPlayableDominoFell;
     public event Action AllNonPlayableDominosFell;
     public event Action FallingCountdownFinished;
+    public event Action<int> CurrentScoreChanged;
+    public event Action LevelSucceeded;
+    public event Action LevelFailed;
+    public event Action ShouldLoadNextLevel;
+    public event Action ShouldRestartGame;
+
+    public void GoToNextLevel()
+    {
+        HasAtLeastOneNonPlayableDominoFallen = false;
+        IsFallingCountdownFinished = false;
+        HaveAllNonPlayableDominosFallenDown = false;
+    }
+
+    public void LoadNextLevel()
+    {
+        ShouldLoadNextLevel?.Invoke();
+    }
+
+    public void RestartGame()
+    {
+        ShouldRestartGame?.Invoke();
+    }
+
+    public void TriggerLevelFailed()
+    {
+        LevelFailed?.Invoke();
+    }
+
+    public void TriggerLevelSucceded()
+    {
+        LevelSucceeded?.Invoke();
+    }
 }

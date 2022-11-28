@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public interface IGameModel
 {
-    public event Action<GameMode> GameModeChanged;
+    public event Action<XRMode> XRModeChanged;
     public event Action<IDesk> FirstNonPlayableDominoFell;
     public event Action<IDesk> AllNonPlayableDominosFell;
     public event Action<IDesk> FallingCountdownFinished;
@@ -11,7 +11,7 @@ public interface IGameModel
     public event Action<IDesk> LevelFailed;
     public event Action<IDesk> ShouldLoadNextLevel;
     public event Action<IDesk> ShouldRestartGame;
-    public GameMode CurrentGameMode { get; set; }
+    public XRMode CurrentXRMode { get; set; }
     public IReadOnlyDictionary<IDesk, bool> HasAtLeastOneNonPlayableDominoFallen { get; }
     public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown { get; }
     public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished { get; }

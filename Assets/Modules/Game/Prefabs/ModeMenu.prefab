@@ -320,12 +320,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _visuals: {fileID: 6147710099579286282}
   _heightOffsetUserHeadMenu: 0.2
-  _editModeButton: {fileID: 5150165044641937120}
-  _playModeButton: {fileID: 1107530615573885415}
+  _arModeButton: {fileID: 5150165044641937120}
+  _vrModeButton: {fileID: 1107530615573885415}
   _quitGameButton: {fileID: 102809398273036525}
   _currentModeText: {fileID: 6115330241625017575}
-  _editModeText: 'Current mode: <br>Edit Mode'
-  _playModeText: 'Current mode: <br>Play Mode'
+  _arModeText: 'Current mode: <br>AR Mode'
+  _vrModeText: 'Current mode: <br>VR Mode'
+  _vrCameraBackground: {fileID: 11400000, guid: 647204dc4e849734ca9edbfc0edb5bf3, type: 2}
+  _arCameraBackground: {fileID: 11400000, guid: 30d813d56b98704428e148c63be0e93c, type: 2}
 --- !u!1001 &3536404110893898407
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -423,7 +425,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4171210596153234762, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_Name
-      value: PlayModeButton
+      value: VRModeButton
       objectReference: {fileID: 0}
     - target: {fileID: 4171210596153234763, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_RootOrder
@@ -471,7 +473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6198825956437652943, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_text
-      value: Play mode
+      value: VR mode
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -574,7 +576,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4171210596153234762, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_Name
-      value: EditModeButton
+      value: ARModeButton
       objectReference: {fileID: 0}
     - target: {fileID: 4171210596153234763, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_RootOrder
@@ -622,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6198825956437652943, guid: e362f6d3f80ab904cba2f884225107b8, type: 3}
       propertyPath: m_text
-      value: Edit mode
+      value: AR mode
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

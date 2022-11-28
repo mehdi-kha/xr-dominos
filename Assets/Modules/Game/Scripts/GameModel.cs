@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public class GameModel : IGameModel
 {
-    private GameMode _currentGameMode;
+    private XRMode _currentGameMode;
     private Dictionary<IDesk, bool> _hasFirstNonPlayableDominoFallen = new();
     private Dictionary<IDesk, bool> _isFallingCountdownFinished = new();
     private Dictionary<IDesk, bool> _haveAllNonPlayableDominosFallenDown = new();
     private Dictionary<IDesk, int> _currentScore = new();
-    public GameMode CurrentGameMode
+    public XRMode CurrentXRMode
     {
         get => _currentGameMode;
         set 
         {
             _currentGameMode = value;
-            GameModeChanged?.Invoke(value);
+            XRModeChanged?.Invoke(value);
         }
     }
 
@@ -60,7 +60,7 @@ public class GameModel : IGameModel
         _currentScore[desk] = score;
     }
 
-    public event Action<GameMode> GameModeChanged;
+    public event Action<XRMode> XRModeChanged;
     public event Action<IDesk> FirstNonPlayableDominoFell;
     public event Action<IDesk> AllNonPlayableDominosFell;
     public event Action<IDesk> FallingCountdownFinished;

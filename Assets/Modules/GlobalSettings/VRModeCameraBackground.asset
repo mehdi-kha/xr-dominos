@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85e679574c31de4db7a8a9c3e1fa41c, type: 3}
   m_Name: VRModeCameraBackground
   m_EditorClassIdentifier: 
-  Value: {r: 0, g: 0, b: 0, a: 0}
+  Value: {r: 0.7647059, g: 0.76862746, b: 0.78039217, a: 1}

@@ -28,7 +28,7 @@ public class DeskController : MonoBehaviour, IDesk
     {
         DeskSpawned?.Invoke(this);
         StartCoroutine(SetupDeskAfterEndOfFrame());
-        HideDeskAndDisableDominoFallingDetector();
+        Hide();
     }
 
     public void Show()
@@ -37,7 +37,7 @@ public class DeskController : MonoBehaviour, IDesk
         _renderer.enabled = true;
     }
 
-    private void HideDeskAndDisableDominoFallingDetector()
+    public void Hide()
     {
         _renderer.enabled = false;
     }

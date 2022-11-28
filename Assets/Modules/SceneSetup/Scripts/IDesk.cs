@@ -25,4 +25,9 @@ public interface IDesk
     ///     Make the desk appear.
     /// </summary>
     public void Show();
+
+    /// <summary>
+    ///     Make the desk disappear.
+    /// </summary>
+    public void Hide();
 }

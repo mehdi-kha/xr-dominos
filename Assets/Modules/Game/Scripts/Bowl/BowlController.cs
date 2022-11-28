@@ -23,9 +23,41 @@ public class BowlController : MonoBehaviour
 
     private void Awake()
     {
-        _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, null, null, true, 20);
+        _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, OnReleaseToPool, null, true, 20);
         _sceneSetupModel.GameStarted += OnGameStarted;
         _gameModel.FirstNonPlayableDominoFell += OnFirstNonPlayableDominoFell;
+        _gameModel.ShouldLoadNextLevel += OnShouldLoadNextLevel;
+        _gameModel.ShouldRestartGame += OnShouldRestartGame;
+    }
+
+    private void OnDestroy()
+    {
+        _sceneSetupModel.GameStarted -= OnGameStarted;
+        _gameModel.FirstNonPlayableDominoFell -= OnFirstNonPlayableDominoFell;
+        _gameModel.ShouldLoadNextLevel -= OnShouldLoadNextLevel;
+        _gameModel.ShouldRestartGame -= OnShouldRestartGame;
+    }
+
+    private void OnShouldRestartGame(IDesk desk)
+    {
+        if (desk != CorrespondingDesk)
+        {
+            return;
+        }
+
+        DespawnDominos();
+        PopulateBowl();
+    }
+
+    private void OnShouldLoadNextLevel(IDesk desk)
+    {
+        if (desk != CorrespondingDesk)
+        {
+            return;
+        }
+
+        DespawnDominos();
+        PopulateBowl();
     }
 
     private void Start()
@@ -64,6 +96,16 @@ public class BowlController : MonoBehaviour
         }
     }
 
+    private void DespawnDominos()
+    {
+        foreach (var domino in _spawnedDominos)
+        {
+            _dominoPool.Release(domino);
+        }
+
+        _spawnedDominos.Clear();
+    }
+
     private DominoController CreateDomino()
     {
         return Instantiate(_dominoPrefab);
@@ -71,12 +113,18 @@ public class BowlController : MonoBehaviour
 
     private void OnTakeDominoFromPool(DominoController domino)
     {
+        domino.gameObject.SetActive(true);
         var dominoPosition = _dominoSpawningSpot.position;
         if (_addRandomnessAroundTheSpawningSpot)
         {
             dominoPosition = RandomizeSpawningPosition(dominoPosition);
         }
         domino.transform.position = dominoPosition;
+    }
+
+    private void OnReleaseToPool(DominoController domino)
+    {
+        domino.gameObject.SetActive(false);
     }
 
     private Vector3 RandomizeSpawningPosition(Vector3 spawningPosition)

@@ -33,7 +33,7 @@ public class GameController : MonoBehaviour
 
     private void LoadNextLevel(IDesk desk)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     private void OnFallingCountdownFinished(IDesk desk)

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,8 +11,8 @@ public class SceneSetupModel : ISceneSetupModel
     private bool _isUserOnFootsteps;
     private Transform _userHead;
     [SerializeField] private string _defaultPlayerHeadTag = "MainCamera";
-    private List<DeskController> _deskControllers = new();
-    private bool _hasGameStarted;
+    private Dictionary<IDesk, bool> _hasGameStarted = new();
+    private List<IDesk> _desks = new();
     public bool IsUserOnFootsteps
     { 
         get => _isUserOnFootsteps; 
@@ -44,27 +45,23 @@ public class SceneSetupModel : ISceneSetupModel
         } 
     }
 
-    public bool HasGameStarted
+    public IReadOnlyDictionary<IDesk, bool> HasGameStarted => _hasGameStarted;
+
+    public void StartGameForAllDesks()
     {
-        get => _hasGameStarted;
-        set
+        foreach (var desk in _desks)
         {
-            _hasGameStarted = value;
-
-            GameStarted?.Invoke();
-
-            // It's complicated to inject this model into the DeskController, since the prefabs are spawned by the Oculus API.
-            // Hence exceptionally calling the controller's methods here
-            foreach (var deskController in _deskControllers)
-            {
-                deskController.ShowDesk();
-            }
+            _hasGameStarted[desk] = true;
+            GameStarted?.Invoke(desk);
+            desk.Show();
         }
     }
 
+    public IEnumerable<IDesk> Desks => _desks;
+
     public event Action SkipRoomConfiguration;
     public event Action<DeskController> DeskDetected;
-    public event Action GameStarted;
+    public event Action<IDesk> GameStarted;
     public event Action<bool> UserFootprintsStatusChanged;
 
     public void RaiseSkipRoomConfiguration()
@@ -84,9 +81,9 @@ public class SceneSetupModel : ISceneSetupModel
     {
         DeskController.DeskSpawned += (deskController) =>
         {
+            _desks.Add(deskController);
             DeskDetected?.Invoke(deskController);
             HaveDesksBeenDetected = true;
-            _deskControllers.Add(deskController);
         };
     }
 }

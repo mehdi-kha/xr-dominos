@@ -8,6 +8,6 @@ public class MockModel_BowlPlayground : MonoBehaviour
     [Inject] private SceneSetupModel _sceneSetupModel;
     private void Start()
     {
-        _sceneSetupModel.HasGameStarted = true;
+        _sceneSetupModel.StartGameForAllDesks();
     }
 }

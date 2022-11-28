@@ -1,24 +1,27 @@
 using System;
+using System.Collections.Generic;
 
 public interface IGameModel
 {
     public event Action<GameMode> GameModeChanged;
-    public event Action FirstNonPlayableDominoFell;
-    public event Action AllNonPlayableDominosFell;
-    public event Action FallingCountdownFinished;
-    public event Action<int> CurrentScoreChanged;
-    public event Action LevelSucceeded;
-    public event Action LevelFailed;
-    public event Action ShouldLoadNextLevel;
-    public event Action ShouldRestartGame;
+    public event Action<IDesk> FirstNonPlayableDominoFell;
+    public event Action<IDesk> AllNonPlayableDominosFell;
+    public event Action<IDesk> FallingCountdownFinished;
+    public event Action<IDesk> LevelSucceeded;
+    public event Action<IDesk> LevelFailed;
+    public event Action<IDesk> ShouldLoadNextLevel;
+    public event Action<IDesk> ShouldRestartGame;
     public GameMode CurrentGameMode { get; set; }
-    public bool HasAtLeastOneNonPlayableDominoFallen { get; set; }
-    public bool HaveAllNonPlayableDominosFallenDown { get; set; }
-    public bool IsFallingCountdownFinished { get; set; }
-    public int CurrentScore { get; set; }
-    public void GoToNextLevel();
-    public void TriggerLevelSucceded();
-    public void TriggerLevelFailed();
-    public void LoadNextLevel();
-    public void RestartGame();
+    public IReadOnlyDictionary<IDesk, bool> HasAtLeastOneNonPlayableDominoFallen { get; }
+    public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown { get; }
+    public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished { get; }
+    public IReadOnlyDictionary<IDesk, int> CurrentScore { get; }
+    public void TriggerLevelSucceded(IDesk desk);
+    public void TriggerLevelFailed(IDesk desk);
+    public void LoadNextLevel(IDesk desk);
+    public void RestartGame(IDesk desk);
+    public void SetHasAtLeastOneNonPlayableDominoFallen(IDesk desk, bool condition);
+    public void SetIsFallingCOuntdownFinished(IDesk desk, bool isFinished);
+    public void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen);
+    public void SetCurrentScore(IDesk desk, int score);
 }

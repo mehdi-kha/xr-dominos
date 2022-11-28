@@ -11,7 +11,10 @@ public class StartGameMenuController : MenuController
         _startGameButton.WhenPointerEventRaised += OnStartGameButtonPointerEvent;
         _sceneSetupModel.GameStarted += OnGameStarted;
         _sceneSetupModel.UserFootprintsStatusChanged += OnUserFootprintStatusChanged;
-        HideMenu();
+        if (!_sceneSetupModel.IsUserOnFootsteps)
+        {
+            HideMenu();
+        }
     }
 
     private void OnDestroy()
@@ -39,7 +42,7 @@ public class StartGameMenuController : MenuController
         ShowMenu();
     }
 
-    private void OnGameStarted()
+    private void OnGameStarted(IDesk desk)
     {
         HideMenu();
     }
@@ -51,7 +54,7 @@ public class StartGameMenuController : MenuController
             return;
         }
 
-        _sceneSetupModel.HasGameStarted = true;
+        _sceneSetupModel.StartGameForAllDesks();
     }
 
     private void OnDeskSpawned(DeskController deskController)

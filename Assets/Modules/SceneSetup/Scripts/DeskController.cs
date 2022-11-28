@@ -6,7 +6,7 @@ using UnityEngine;
 ///     It's a bit complicated to get a clear list of the desks in the player's zone using the Oculus API,
 ///     hence this little class to handle our own logic.
 /// </summary>
-public class DeskController : MonoBehaviour
+public class DeskController : MonoBehaviour, IDesk
 {
     public static event Action<DeskController> DeskSpawned;
     public event Action SetupDone;
@@ -16,6 +16,7 @@ public class DeskController : MonoBehaviour
     /// </summary>
     public Vector3 CenterTopPosition => transform.position + _boxCollider.bounds.extents.y * transform.up;
     public Bounds Bounds => _meshFilter.mesh.bounds;
+    public Transform Transform => transform;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private float _distanceFromDeskEdge = 0.1f;
     [SerializeField] MeshFilter _meshFilter;
@@ -30,13 +31,13 @@ public class DeskController : MonoBehaviour
         HideDeskAndDisableDominoFallingDetector();
     }
 
-    public void ShowDesk()
+    public void Show()
     {
         // TODO maybe an animation would be better
         _renderer.enabled = true;
     }
 
-    public void HideDeskAndDisableDominoFallingDetector()
+    private void HideDeskAndDisableDominoFallingDetector()
     {
         _renderer.enabled = false;
     }

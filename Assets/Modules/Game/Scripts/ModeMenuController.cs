@@ -55,7 +55,7 @@ public class ModeMenuController : MenuController
         _gameModel.CurrentGameMode = GameMode.EditMode;
     }
 
-    private void OnGameStarted()
+    private void OnGameStarted(IDesk desk)
     {
         ShowMenu();
     }

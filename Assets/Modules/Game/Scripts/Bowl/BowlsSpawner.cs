@@ -13,9 +13,9 @@ public class BowlsSpawner : MonoBehaviour
         _sceneSetupModel.DeskDetected += OnDeskDetected;
     }
 
-    private void OnDeskDetected(DeskController deskController)
+    private void OnDeskDetected(IDesk desk)
     {
-        StartCoroutine(SpawnBowlOnNextFrame(deskController));
+        StartCoroutine(SpawnBowlOnNextFrame(desk));
     }
 
     /// <summary>
@@ -23,12 +23,12 @@ public class BowlsSpawner : MonoBehaviour
     /// </summary>
     /// <param name="deskController">The desk controller which bowl corresponds to.</param>
     /// <returns></returns>
-    private IEnumerator SpawnBowlOnNextFrame(DeskController deskController)
+    private IEnumerator SpawnBowlOnNextFrame(IDesk desk)
     {
-        var bowlController = _bowlFactory.Create();
+        var bowlController = _bowlFactory.Create(desk);
         yield return _waitForEndOfFrame;
-        bowlController.transform.parent = deskController.transform;
-        bowlController.transform.localPosition = deskController.GetBowlSpawningLocalPosition();
+        bowlController.transform.parent = desk.Transform;
+        bowlController.transform.localPosition = desk.GetBowlSpawningLocalPosition();
         bowlController.transform.parent = null;
     }
 }

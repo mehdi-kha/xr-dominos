@@ -5,6 +5,7 @@ using Zenject;
 
 public class NonPlayableDominoFallingDetector : MonoBehaviour
 {
+    public IDesk CorrespondingDesk;
     [SerializeField] private string _nonPlayableDominoTag = "NonPlayableDomino";
     [Inject] private IGameModel _gameModel;
     [Tooltip("The maximum time that can pass between a non playable domino falling and the game considered being finished.")]
@@ -26,12 +27,12 @@ public class NonPlayableDominoFallingDetector : MonoBehaviour
 
         _fallenDominos[other.GetHashCode()] = true;
 
-        _gameModel.HasAtLeastOneNonPlayableDominoFallen = true;
+        _gameModel.SetHasAtLeastOneNonPlayableDominoFallen(CorrespondingDesk, true);
         ResetAndStartCountdown();
 
         if (_fallenDominos.All(a => a.Value))
         {
-            _gameModel.HaveAllNonPlayableDominosFallenDown = true;
+            _gameModel.SetHaveAllNonPlayableDominosFallen(CorrespondingDesk, true);
         }
     }
 
@@ -43,6 +44,7 @@ public class NonPlayableDominoFallingDetector : MonoBehaviour
         }
 
         _fallenDominos[other.GetHashCode()] = false;
+        _gameModel.SetHaveAllNonPlayableDominosFallen(CorrespondingDesk, false);
     }
 
     private void ResetAndStartCountdown()
@@ -61,7 +63,7 @@ public class NonPlayableDominoFallingDetector : MonoBehaviour
         _countdown -= Time.deltaTime;
         if (_countdown <= 0)
         {
-            _gameModel.IsFallingCountdownFinished = true;
+            _gameModel.SetIsFallingCOuntdownFinished(CorrespondingDesk, true);
             _isCountdownRunning = false;
         }
     }

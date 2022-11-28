@@ -1,70 +1,156 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.Splines;
 using Zenject;
 
+[Serializable]
+public struct Level
+{
+    public int Number;
+    public SplineContainer SplineContainerPrefab;
+}
 public class NonPlayableDominosSpawner : MonoBehaviour
 {
-    [SerializeField] private SplineContainer _splineContainerPrefab;
+    [SerializeField] private List<Level> _levels;
     [SerializeField] private GameObject _nonPlayableDominoPrefab;
     [SerializeField] private float _distanceBetweenDominos = 0.05f;
     [Inject] private ISceneSetupModel _sceneSetupModel;
+    [Inject] private IGameModel _gameModel;
     [Range(0, 1)]
     [SerializeField] private float _holeStartRelativeDistance = 0.4f;
     [Range(0, 1)]
     [SerializeField] private float _holeEndRelativeDistance = 0.6f;
     [SerializeField] private float _verticalSpawningOffset = 0.05f;
 
-    private float _splineLength;
-    private float _relativeDistanceBetweenDominos;
-    private SplineContainer _spline;
+    private ObjectPool<GameObject> _nonPlayableDominosPool;
+    private Dictionary<IDesk, List<GameObject>> _spawnedNonPlayableDominos = new();
 
     private void Awake()
     {
-        // TODO in general improve this to be more flexible and be able to spawn different types of splines
-        // Maybe even randomly generate a spline on the desk?
-        _sceneSetupModel.DeskDetected += OnDeskDetected;
         _sceneSetupModel.GameStarted += OnGameStarted;
-        _splineLength = _splineContainerPrefab.CalculateLength();
-        _relativeDistanceBetweenDominos = _distanceBetweenDominos / _splineLength;
+        _gameModel.ShouldLoadNextLevel += OnShouldLoadNextLevel;
+        _gameModel.ShouldRestartGame += OnShouldRestartGame;
+
+        _nonPlayableDominosPool = new ObjectPool<GameObject>(CreateDomino, OnTakeDominoFromPool, OnReleaseDominoToPool, null, true, 30);
     }
 
-    private void OnDeskDetected(DeskController deskController)
+    private void OnDestroy()
     {
-        deskController.SetupDone += () => OnDeskSetupDone(deskController);
+        _sceneSetupModel.GameStarted -= OnGameStarted;
+        _gameModel.ShouldLoadNextLevel -= OnShouldLoadNextLevel;
+        _gameModel.ShouldRestartGame -= OnShouldRestartGame;
     }
 
-    private void OnDeskSetupDone(DeskController deskController)
+    private GameObject CreateDomino()
+    {
+        var instance = Instantiate(_nonPlayableDominoPrefab);
+        instance.SetActive(false);
+        return instance;
+    }
+
+    private void OnTakeDominoFromPool(GameObject domino)
+    {
+        domino.SetActive(true);
+    }
+
+    private void OnReleaseDominoToPool(GameObject domino)
+    {
+        domino.SetActive(false);
+    }
+
+    private void OnShouldRestartGame(IDesk desk)
+    {
+        DespawnNonPlayableDominosForDesk(desk);
+        SpawnNonPlayableDominosForLevel(desk, 0);
+    }
+
+    private void OnShouldLoadNextLevel(IDesk desk)
+    {
+        DespawnNonPlayableDominosForDesk(desk);
+        SpawnNonPlayableDominosForLevel(desk, _gameModel.CurrentScore[desk]);
+    }
+
+    private void OnGameStarted(IDesk desk)
+    {
+        SpawnNonPlayableDominosForLevel(desk, 0);
+    }
+
+    private void SpawnNonPlayableDominosForLevel(IDesk desk, int level)
+    {
+        var correspondingSplineContainerPrefab = GetSplineContainerPrefabForLevel(level);
+        var spline = SpawnSpline(desk, correspondingSplineContainerPrefab);
+        var spawnedDominos = SpawnNonPlayableDominosAlongSpline(spline);
+        if (!_spawnedNonPlayableDominos.ContainsKey(desk))
+        {
+            _spawnedNonPlayableDominos[desk] = new List<GameObject>();
+        }
+
+        _spawnedNonPlayableDominos[desk].AddRange(spawnedDominos);
+    }
+
+    private void DespawnNonPlayableDominosForDesk(IDesk desk)
+    {
+        var dominos = _spawnedNonPlayableDominos[desk];
+        foreach (var domino in dominos)
+        {
+            _nonPlayableDominosPool.Release(domino);
+        }
+        _spawnedNonPlayableDominos[desk].Clear();
+    }
+
+    private SplineContainer GetSplineContainerPrefabForLevel(int searchedLevel)
+    {
+        Level foundLevel;
+        try
+        {
+            foundLevel = _levels.First(level => level.Number == searchedLevel);
+        }
+
+        catch (InvalidOperationException e)
+        {
+            throw new NullReferenceException("No spline for the level 0 was registered.");
+        }
+
+        return foundLevel.SplineContainerPrefab;
+    }
+
+    private SplineContainer SpawnSpline(IDesk deskController, SplineContainer splineContainerPrefab)
     {
         // Spawn spline on top of the desk
-        _spline = Instantiate(_splineContainerPrefab, deskController.transform);
+        var spline = Instantiate(splineContainerPrefab, deskController.Transform);
         // Position the spline on top of the desk
-        _spline.transform.position += deskController.CenterTopPosition - deskController.transform.position;
+        spline.transform.position += deskController.CenterTopPosition - deskController.Transform.position;
         // Add offset
-        _spline.transform.localPosition += _verticalSpawningOffset * transform.up;
+        spline.transform.localPosition += _verticalSpawningOffset * spline.transform.up;
         // Adapt the spline to match the table
-        _spline.transform.localScale = deskController.Bounds.size;
+        spline.transform.localScale = deskController.Bounds.size;
+
+        return spline;
     }
 
-    private void OnGameStarted()
+    private List<GameObject> SpawnNonPlayableDominosAlongSpline(SplineContainer spline)
     {
-        SpawnNonPlayableDominosAlongSpline();
-    }
-
-    private void SpawnNonPlayableDominosAlongSpline()
-    {
+        var spawnedDominos = new List<GameObject>();
         float currentRelativePosition = 0;
+        var splineLength = spline.CalculateLength();
+        var relativeDistanceBetweenDominos = _distanceBetweenDominos / splineLength;
         while (currentRelativePosition < 1)
         {
-            _spline.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
-            var domino = Instantiate(_nonPlayableDominoPrefab);
+            spline.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
+            var domino = _nonPlayableDominosPool.Get();
+            spawnedDominos.Add(domino);
             domino.transform.position = worldPosition;
             domino.transform.LookAt(worldPosition + tangent, upVector);
-            currentRelativePosition += _relativeDistanceBetweenDominos;
+            currentRelativePosition += relativeDistanceBetweenDominos;
             while(currentRelativePosition > _holeStartRelativeDistance && currentRelativePosition < _holeEndRelativeDistance)
             {
-                currentRelativePosition += _relativeDistanceBetweenDominos;
+                currentRelativePosition += relativeDistanceBetweenDominos;
             }
         }
+
+        return spawnedDominos;
     }
 }

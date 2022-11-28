@@ -12,6 +12,8 @@ public class ScoreMenuController : MenuController
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private string _scorePrefixText = "Current score: ";
 
+    private IDesk _currentDesk;
+
     protected void Awake()
     {
         _gameModel.LevelSucceeded += OnLevelSucceded;
@@ -19,18 +21,18 @@ public class ScoreMenuController : MenuController
         _quitGameButton.WhenPointerEventRaised += OnQuitGameButtonPointerRaised;
         _continueButton.WhenPointerEventRaised += OnContinueButtonPointerRaised;
         _restartButton.WhenPointerEventRaised += OnRestartButtonPointerRaised;
-        _gameModel.CurrentScoreChanged += SetScoreText;
-        SetScoreText(_gameModel.CurrentScore);
         HideMenu();
     }
 
-    private void OnLevelFailed()
+    private void OnLevelFailed(IDesk desk)
     {
+        _currentDesk = desk;
         ShowFailurePanel();
     }
 
-    private void OnLevelSucceded()
+    private void OnLevelSucceded(IDesk desk)
     {
+        _currentDesk = desk;
         ShowSuccessPanel();
     }
 
@@ -41,13 +43,13 @@ public class ScoreMenuController : MenuController
 
     private void OnContinueButtonPointerRaised(PointerEvent obj)
     {
-        _gameModel.LoadNextLevel();
+        _gameModel.LoadNextLevel(_currentDesk);
         HideMenu();
     }
 
     private void OnRestartButtonPointerRaised(PointerEvent obj)
     {
-        _gameModel.RestartGame();
+        _gameModel.RestartGame(_currentDesk);
         HideMenu();
     }
 
@@ -56,7 +58,6 @@ public class ScoreMenuController : MenuController
         _quitGameButton.WhenPointerEventRaised -= OnQuitGameButtonPointerRaised;
         _continueButton.WhenPointerEventRaised -= OnContinueButtonPointerRaised;
         _restartButton.WhenPointerEventRaised -= OnRestartButtonPointerRaised;
-        _gameModel.CurrentScoreChanged -= SetScoreText;
     }
 
     private void OnQuitGameButtonPointerRaised(PointerEvent obj)
@@ -66,7 +67,6 @@ public class ScoreMenuController : MenuController
 
     private void ShowSuccessPanel()
     {
-        // TODO override the ShowMenu method to make the panel appear on top of the desk for which all dominos have fallen
         ShowMenu();
         _continueButton.gameObject.SetActive(true);
         _restartButton.gameObject.SetActive(false);
@@ -77,5 +77,13 @@ public class ScoreMenuController : MenuController
         ShowMenu();
         _continueButton.gameObject.SetActive(false);
         _restartButton.gameObject.SetActive(true);
+    }
+
+    protected override void ShowMenu()
+    {
+        base.ShowMenu();
+        // TODO make the panel appear on top of the desk for which all dominos have fallen? Explore the idea
+
+        SetScoreText(_gameModel.CurrentScore[_currentDesk]);
     }
 }

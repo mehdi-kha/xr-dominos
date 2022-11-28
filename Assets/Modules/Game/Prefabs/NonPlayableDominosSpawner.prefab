@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4599131870178663999
 MonoBehaviour:
@@ -44,8 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71eea549c7a8a74680a4afdce2378c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _splineContainerPrefab: {fileID: 1781270059760212239, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+  _levels:
+  - Number: 0
+    SplineContainerPrefab: {fileID: 3639231165122883988, guid: d4614a88a5af34945a9bad9940dc6606, type: 3}
+  - Number: 1
+    SplineContainerPrefab: {fileID: 3639231165122883988, guid: a7940aeacf68ae74b918c49a15ad1fd0, type: 3}
+  - Number: 2
+    SplineContainerPrefab: {fileID: 3639231165122883988, guid: a3c2bebf0b4c55e41905ff3be5c5d07e, type: 3}
   _nonPlayableDominoPrefab: {fileID: 1704727383277259978, guid: 4efb00c1a8217004da44365589c245b8, type: 3}
   _distanceBetweenDominos: 0.05
   _holeStartRelativeDistance: 0.4
   _holeEndRelativeDistance: 0.6
+  _verticalSpawningOffset: 0.05

@@ -5,6 +5,7 @@ using Zenject;
 
 public class BowlController : MonoBehaviour
 {
+    public IDesk CorrespondingDesk;
     [Inject] private ISceneSetupModel _sceneSetupModel;
     [Inject] private IGameModel _gameModel;
     [SerializeField] private GameObject _visuals;
@@ -23,17 +24,25 @@ public class BowlController : MonoBehaviour
     private void Awake()
     {
         _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, null, null, true, 20);
-        if (!_sceneSetupModel.HasGameStarted)
-        {
-            Hide();
-        }
-
         _sceneSetupModel.GameStarted += OnGameStarted;
         _gameModel.FirstNonPlayableDominoFell += OnFirstNonPlayableDominoFell;
     }
 
-    private void OnFirstNonPlayableDominoFell()
+    private void Start()
     {
+        if (!_sceneSetupModel.HasGameStarted.ContainsKey(CorrespondingDesk) || !_sceneSetupModel.HasGameStarted[CorrespondingDesk])
+        {
+            Hide();
+        }
+    }
+
+    private void OnFirstNonPlayableDominoFell(IDesk desk)
+    {
+        if (desk != CorrespondingDesk)
+        {
+            return;
+        }
+
         MakeAllPlayableDominosNonInteractable();
     }
 
@@ -78,8 +87,13 @@ public class BowlController : MonoBehaviour
         return spawningPosition;
     }
 
-    private void OnGameStarted()
+    private void OnGameStarted(IDesk desk)
     {
+        if (desk != CorrespondingDesk)
+        {
+            return;
+        }
+
         ShowAndPopulateWithDominos();
     }
 

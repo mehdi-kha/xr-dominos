@@ -17,7 +17,7 @@ public class FootstepsController : MonoBehaviour
         _sceneSetupModel.GameStarted += OnGameStarted;
     }
 
-    private void OnGameStarted()
+    private void OnGameStarted(IDesk desk)
     {
         gameObject.SetActive(false);
     }

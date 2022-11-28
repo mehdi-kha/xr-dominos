@@ -1,12 +1,13 @@
 using System;
+using System.Collections.Generic;
 
 public class GameModel : IGameModel
 {
     private GameMode _currentGameMode;
-    private bool _hasFirstNonPlayableDominoFallen;
-    private bool _isFallingCountdownFinished;
-    private bool _haveAllNonPlayableDominosFallenDown;
-    private int _currentScore;
+    private Dictionary<IDesk, bool> _hasFirstNonPlayableDominoFallen = new();
+    private Dictionary<IDesk, bool> _isFallingCountdownFinished = new();
+    private Dictionary<IDesk, bool> _haveAllNonPlayableDominosFallenDown = new();
+    private Dictionary<IDesk, int> _currentScore = new();
     public GameMode CurrentGameMode
     {
         get => _currentGameMode;
@@ -17,92 +18,83 @@ public class GameModel : IGameModel
         }
     }
 
-    public bool HasAtLeastOneNonPlayableDominoFallen
+    public IReadOnlyDictionary<IDesk, bool> HasAtLeastOneNonPlayableDominoFallen => _hasFirstNonPlayableDominoFallen;
+
+    public void SetHasAtLeastOneNonPlayableDominoFallen(IDesk desk, bool condition)
     {
-        get => _hasFirstNonPlayableDominoFallen;
-        set
+        if ((!_hasFirstNonPlayableDominoFallen.ContainsKey(desk) || !_hasFirstNonPlayableDominoFallen[desk]) && condition)
         {
-            if (!_hasFirstNonPlayableDominoFallen)
-            {
-                FirstNonPlayableDominoFell?.Invoke();
-            }
-
-            _hasFirstNonPlayableDominoFallen = value;
+            FirstNonPlayableDominoFell?.Invoke(desk);
         }
+
+        _hasFirstNonPlayableDominoFallen[desk] = condition;
     }
 
-    public bool IsFallingCountdownFinished 
-    { 
-        get => _isFallingCountdownFinished;
-        set
-        {
-            if (value)
-            {
-                FallingCountdownFinished?.Invoke();
-            }
+    public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished => _isFallingCountdownFinished;
 
-            _isFallingCountdownFinished = value;
+    public void SetIsFallingCOuntdownFinished(IDesk desk, bool isFinished)
+    {
+        if (isFinished)
+        {
+            FallingCountdownFinished?.Invoke(desk);
         }
+        _isFallingCountdownFinished[desk] = isFinished;
     }
 
-    public bool HaveAllNonPlayableDominosFallenDown
-    { 
-        get => _haveAllNonPlayableDominosFallenDown; 
-        set
-        {
-            if (value)
-            {
-                AllNonPlayableDominosFell?.Invoke();
-            }
+    public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown => _haveAllNonPlayableDominosFallenDown;
 
-            _haveAllNonPlayableDominosFallenDown = value;
+    public void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen)
+    {
+        if (haveAllFallen)
+        {
+            AllNonPlayableDominosFell?.Invoke(desk);
         }
+
+        _haveAllNonPlayableDominosFallenDown[desk] = haveAllFallen;
     }
 
-    public int CurrentScore
-    { 
-        get => _currentScore;
-        set
-        {
-            CurrentScoreChanged?.Invoke(value);
-            _currentScore = value;
-        }
+    public IReadOnlyDictionary<IDesk, int> CurrentScore => _currentScore;
+
+    public void SetCurrentScore(IDesk desk, int score)
+    {
+        _currentScore[desk] = score;
     }
 
     public event Action<GameMode> GameModeChanged;
-    public event Action FirstNonPlayableDominoFell;
-    public event Action AllNonPlayableDominosFell;
-    public event Action FallingCountdownFinished;
-    public event Action<int> CurrentScoreChanged;
-    public event Action LevelSucceeded;
-    public event Action LevelFailed;
-    public event Action ShouldLoadNextLevel;
-    public event Action ShouldRestartGame;
+    public event Action<IDesk> FirstNonPlayableDominoFell;
+    public event Action<IDesk> AllNonPlayableDominosFell;
+    public event Action<IDesk> FallingCountdownFinished;
+    public event Action<IDesk> LevelSucceeded;
+    public event Action<IDesk> LevelFailed;
+    public event Action<IDesk> ShouldLoadNextLevel;
+    public event Action<IDesk> ShouldRestartGame;
 
-    public void GoToNextLevel()
+    private void ResetDataForDesk(IDesk desk)
     {
-        HasAtLeastOneNonPlayableDominoFallen = false;
-        IsFallingCountdownFinished = false;
-        HaveAllNonPlayableDominosFallenDown = false;
+        SetHasAtLeastOneNonPlayableDominoFallen(desk, false);
+        SetIsFallingCOuntdownFinished(desk, false);
+        SetHaveAllNonPlayableDominosFallen(desk, false);
     }
 
-    public void LoadNextLevel()
+    public void LoadNextLevel(IDesk desk)
     {
-        ShouldLoadNextLevel?.Invoke();
+        ResetDataForDesk(desk);
+        ShouldLoadNextLevel?.Invoke(desk);
     }
 
-    public void RestartGame()
+    public void RestartGame(IDesk desk)
     {
-        ShouldRestartGame?.Invoke();
+        ResetDataForDesk(desk);
+        ShouldRestartGame?.Invoke(desk);
     }
 
-    public void TriggerLevelFailed()
+    public void TriggerLevelFailed(IDesk desk)
     {
-        LevelFailed?.Invoke();
+        LevelFailed?.Invoke(desk);
     }
 
-    public void TriggerLevelSucceded()
+    public void TriggerLevelSucceded(IDesk desk)
     {
-        LevelSucceeded?.Invoke();
+        LevelSucceeded?.Invoke(desk);
     }
 }

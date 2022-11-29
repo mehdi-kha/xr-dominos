@@ -7,7 +7,7 @@ public class StartGameMenuController : MenuController
     [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _startGameButton;
     private void Awake()
     {
-        _sceneSetupModel.DeskDetected += OnDeskSpawned;
+        _sceneSetupModel.DeskDetected += OnDeskDetected;
         _startGameButton.WhenPointerEventRaised += OnStartGameButtonPointerEvent;
         _sceneSetupModel.GameStarted += OnGameStarted;
         _sceneSetupModel.UserFootprintsStatusChanged += OnUserFootprintStatusChanged;
@@ -19,7 +19,7 @@ public class StartGameMenuController : MenuController
 
     private void OnDestroy()
     {
-        _sceneSetupModel.DeskDetected -= OnDeskSpawned;
+        _sceneSetupModel.DeskDetected -= OnDeskDetected;
         _startGameButton.WhenPointerEventRaised -= OnStartGameButtonPointerEvent;
         _sceneSetupModel.GameStarted -= OnGameStarted;
         _sceneSetupModel.UserFootprintsStatusChanged -= OnUserFootprintStatusChanged;
@@ -57,11 +57,11 @@ public class StartGameMenuController : MenuController
         _sceneSetupModel.StartGameForAllDesks();
     }
 
-    private void OnDeskSpawned(DeskController deskController)
+    private void OnDeskDetected(DeskController deskController)
     {
-        if (!_sceneSetupModel.HaveDesksBeenDetected)
+        if (!_sceneSetupModel.IsUserOnFootsteps)
         {
-            _visuals.SetActive(false);
+            HideMenu();
             return;
         }
 

@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4881680224240465796, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7497959400460165501, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7497959400460165503, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
       propertyPath: m_Name
-      value: NonPlayableDominosPath
+      value: Level0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

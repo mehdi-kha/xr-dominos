@@ -9,6 +9,7 @@ public class DominoController : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private string _dissolveAnimationTrigger = "DissolveDomino";
     [SerializeField] private string _showupAnimationTrigger = "ShowDomino";
+    [SerializeField] private Rigidbody _rigidBody;
     public void MakeNonInteractable()
     {
         foreach (var grabInteractable in _grabInteractables)
@@ -27,6 +28,7 @@ public class DominoController : MonoBehaviour
 
     public void Hide()
     {
+        _rigidBody.isKinematic = true;
         _animator.SetTrigger(_dissolveAnimationTrigger);
         _particleSystem.Play();
     }
@@ -34,5 +36,6 @@ public class DominoController : MonoBehaviour
     public void Show()
     {
         _animator.SetTrigger(_showupAnimationTrigger);
+        _rigidBody.isKinematic = false;
     }
 }

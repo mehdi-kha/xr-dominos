@@ -5274,6 +5274,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3064128438321311425}
   m_SourcePrefab: {fileID: 100100000, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
+--- !u!54 &600960543993832827 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 2366596178194405160, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
+  m_PrefabInstance: {fileID: 2918575280909202003}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1059251737111589813 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2752802279300284902, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
@@ -5307,6 +5312,19 @@ LODGroup:
     renderers:
     - renderer: {fileID: 6708553181591206272}
   m_Enabled: 1
+--- !u!114 &5716924897388717472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2697893455468495968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9183f5e102850546bf54b7cd43a562f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DominoController: {fileID: 1432990725021932123}
 --- !u!114 &3240020275952809279 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 321446104781473644, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}
@@ -5389,6 +5407,8 @@ MonoBehaviour:
   _visuals: {fileID: 8262713966033925557}
   _animator: {fileID: 2219582260481370732}
   _dissolveAnimationTrigger: DissolveDomino
+  _showupAnimationTrigger: ShowDomino
+  _rigidBody: {fileID: 600960543993832827}
 --- !u!23 &7104698223269566788 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5339063149016443671, guid: 93abbce9b8b609046a3caec01ae3c57a, type: 3}

@@ -17,6 +17,7 @@ public class BowlController : MonoBehaviour
     [Tooltip("Only relevant is spawning randomness is enabled. Max distance from the defined spawning spot.")]
     [SerializeField] private float _spawningRandomnessRadius = 0.05f;
     [SerializeField] private int _numberOfDominosToSpawn = 10;
+    [SerializeField] private BowlLeavingDominosController _bowlLeavingDominosController;
 
     private ObjectPool<DominoController> _dominoPool;
     private List<DominoController> _spawnedDominos = new List<DominoController>();
@@ -76,6 +77,7 @@ public class BowlController : MonoBehaviour
         }
 
         MakeAllPlayableDominosNonInteractable();
+        DissolveDominosInBowl();
     }
 
     private void MakeAllPlayableDominosNonInteractable()
@@ -86,11 +88,20 @@ public class BowlController : MonoBehaviour
         }
     }
 
+    private void DissolveDominosInBowl()
+    {
+        foreach (var domino in _bowlLeavingDominosController.DominosInBowl)
+        {
+            domino.Value.Hide();
+        }
+    }
+
     private void PopulateBowl()
     {
         for (int i = 0; i < _numberOfDominosToSpawn; i++)
         {
             var domino = _dominoPool.Get();
+            domino.Show();
             domino.MakeInteractable();
             _spawnedDominos.Add(domino);
         }

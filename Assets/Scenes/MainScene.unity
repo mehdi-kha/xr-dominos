@@ -828,7 +828,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8836679873742746216, guid: a6253795909c188409c6f8ab81355ff5, type: 3}
       propertyPath: m_Name
-      value: ModeMenu
+      value: XRModeMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836679873742746216, guid: a6253795909c188409c6f8ab81355ff5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

@@ -328,6 +328,10 @@ MonoBehaviour:
   _vrModeText: 'Current mode: <br>VR Mode'
   _vrCameraBackground: {fileID: 11400000, guid: 647204dc4e849734ca9edbfc0edb5bf3, type: 2}
   _arCameraBackground: {fileID: 11400000, guid: 30d813d56b98704428e148c63be0e93c, type: 2}
+  _camerasToModify:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1001 &3536404110893898407
 PrefabInstance:
   m_ObjectHideFlags: 0

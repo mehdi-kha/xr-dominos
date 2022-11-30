@@ -78,8 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5c4c660133374e8660e5893a18f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startGameButton: {fileID: 5150165044641937120}
   _visuals: {fileID: 6147710099579286282}
+  _heightOffsetUserHeadMenu: 0.2
+  _startGameButton: {fileID: 5150165044641937120}
 --- !u!1001 &6844353687650508108
 PrefabInstance:
   m_ObjectHideFlags: 0

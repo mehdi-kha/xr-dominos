@@ -1,3 +1,10 @@
+# AR branch
+Warning: This branch is experimental, some crashes were observed.
+
+This is what you need to apply to the scene when merging main into this branch, in case there are merge conflicts:
+- Take the MainScene from main
+- Modify the ModeMenu object in that scene: Assign the 3 main cameras from the OVR camera rig to the "Cameras to modify" field.
+
 # Project setup
 You should the TextMeshPro assets via Window -> TextMeshPro -> Import TMP Essential Resources
 

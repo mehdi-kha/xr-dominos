@@ -1,63 +1,32 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Pool;
 using Zenject;
 
-public class BowlController : MonoBehaviour
+public class BowlController : MonoBehaviour, IBowl
 {
     public IDesk CorrespondingDesk;
+    public List<DominoController> DominosInBowl => _bowlLeavingDominosController.DominosInBowl.Values.ToList();
+    public int NumberOfDominosToSpawn => _numberOfDominosToSpawn;
+
     [Inject] private ISceneSetupModel _sceneSetupModel;
-    [Inject] private IGameModel _gameModel;
     [SerializeField] private GameObject _visuals;
-    [SerializeField] private DominoController _dominoPrefab;
-    [SerializeField] private string _dominoTag = "Domino";
     [SerializeField] private Transform _dominoSpawningSpot;
     [Tooltip("If true, some horizontal vector with a random direction will be applied to the spawning spot for each domino being spawned.")]
     [SerializeField] private bool _addRandomnessAroundTheSpawningSpot = true;
     [Tooltip("Only relevant is spawning randomness is enabled. Max distance from the defined spawning spot.")]
     [SerializeField] private float _spawningRandomnessRadius = 0.05f;
     [SerializeField] private int _numberOfDominosToSpawn = 10;
-
-    private ObjectPool<DominoController> _dominoPool;
-    private List<DominoController> _spawnedDominos = new List<DominoController>();
+    [SerializeField] private BowlLeavingDominosController _bowlLeavingDominosController;
 
     private void Awake()
     {
-        _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, OnReleaseToPool, null, true, 20);
         _sceneSetupModel.GameStarted += OnGameStarted;
-        _gameModel.FirstNonPlayableDominoFell += OnFirstNonPlayableDominoFell;
-        _gameModel.ShouldLoadNextLevel += OnShouldLoadNextLevel;
-        _gameModel.ShouldRestartGame += OnShouldRestartGame;
     }
 
     private void OnDestroy()
     {
         _sceneSetupModel.GameStarted -= OnGameStarted;
-        _gameModel.FirstNonPlayableDominoFell -= OnFirstNonPlayableDominoFell;
-        _gameModel.ShouldLoadNextLevel -= OnShouldLoadNextLevel;
-        _gameModel.ShouldRestartGame -= OnShouldRestartGame;
-    }
-
-    private void OnShouldRestartGame(IDesk desk)
-    {
-        if (desk != CorrespondingDesk)
-        {
-            return;
-        }
-
-        DespawnDominos();
-        PopulateBowl();
-    }
-
-    private void OnShouldLoadNextLevel(IDesk desk)
-    {
-        if (desk != CorrespondingDesk)
-        {
-            return;
-        }
-
-        DespawnDominos();
-        PopulateBowl();
     }
 
     private void Start()
@@ -66,65 +35,6 @@ public class BowlController : MonoBehaviour
         {
             Hide();
         }
-    }
-
-    private void OnFirstNonPlayableDominoFell(IDesk desk)
-    {
-        if (desk != CorrespondingDesk)
-        {
-            return;
-        }
-
-        MakeAllPlayableDominosNonInteractable();
-    }
-
-    private void MakeAllPlayableDominosNonInteractable()
-    {
-        foreach (var domino in _spawnedDominos)
-        {
-            domino.MakeNonInteractable();
-        }
-    }
-
-    private void PopulateBowl()
-    {
-        for (int i = 0; i < _numberOfDominosToSpawn; i++)
-        {
-            var domino = _dominoPool.Get();
-            domino.MakeInteractable();
-            _spawnedDominos.Add(domino);
-        }
-    }
-
-    private void DespawnDominos()
-    {
-        foreach (var domino in _spawnedDominos)
-        {
-            _dominoPool.Release(domino);
-        }
-
-        _spawnedDominos.Clear();
-    }
-
-    private DominoController CreateDomino()
-    {
-        return Instantiate(_dominoPrefab);
-    }
-
-    private void OnTakeDominoFromPool(DominoController domino)
-    {
-        domino.gameObject.SetActive(true);
-        var dominoPosition = _dominoSpawningSpot.position;
-        if (_addRandomnessAroundTheSpawningSpot)
-        {
-            dominoPosition = RandomizeSpawningPosition(dominoPosition);
-        }
-        domino.transform.position = dominoPosition;
-    }
-
-    private void OnReleaseToPool(DominoController domino)
-    {
-        domino.gameObject.SetActive(false);
     }
 
     private Vector3 RandomizeSpawningPosition(Vector3 spawningPosition)
@@ -142,7 +52,7 @@ public class BowlController : MonoBehaviour
             return;
         }
 
-        ShowAndPopulateWithDominos();
+        Show();
     }
 
     private void Hide()
@@ -151,9 +61,18 @@ public class BowlController : MonoBehaviour
         _visuals.SetActive(false);
     }
 
-    private void ShowAndPopulateWithDominos()
+    private void Show()
     {
         _visuals.SetActive(true);
-        PopulateBowl();
+    }
+
+    public Vector3 GetDominoSpawningPosition()
+    {
+        if (_addRandomnessAroundTheSpawningSpot)
+        {
+            return RandomizeSpawningPosition(_dominoSpawningSpot.position);
+        }
+
+        return _dominoSpawningSpot.position;
     }
 }

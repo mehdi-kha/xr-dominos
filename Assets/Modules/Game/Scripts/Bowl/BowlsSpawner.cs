@@ -5,7 +5,8 @@ using Zenject;
 public class BowlsSpawner : MonoBehaviour
 {
     [Inject] private ISceneSetupModel _sceneSetupModel;
-    [Inject] private BowlFactory _bowlFactory;
+    [Inject] private IGameModel _gameModel;
+    [Inject] private BowlFactory _bowlsFactory;
     private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
 
     private void Awake()
@@ -25,10 +26,11 @@ public class BowlsSpawner : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnBowlOnNextFrame(IDesk desk)
     {
-        var bowlController = _bowlFactory.Create(desk);
+        var bowl = _bowlsFactory.Create(desk);
         yield return _waitForEndOfFrame;
-        bowlController.transform.parent = desk.Transform;
-        bowlController.transform.localPosition = desk.GetBowlSpawningLocalPosition();
-        bowlController.transform.parent = null;
+        bowl.transform.parent = desk.Transform;
+        bowl.transform.localPosition = desk.GetBowlSpawningLocalPosition();
+        bowl.transform.parent = null;
+        _gameModel.AddBowl(desk, bowl);
     }
 }

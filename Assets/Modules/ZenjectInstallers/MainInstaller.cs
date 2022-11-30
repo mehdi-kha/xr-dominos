@@ -6,11 +6,13 @@ public class MainInstaller : ScriptableObjectInstaller<MainInstaller>
 {
     public GameObject BowlPrefab;
     public GameObject NonPlayableDominoFallingDetectorPrefab;
+    public GameObject DominoPrefab;
     public override void InstallBindings()
     {
         Container.BindInterfacesAndSelfTo<SceneSetupModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
         Container.BindFactory<BowlController, BowlFactory>().FromComponentInNewPrefab(BowlPrefab);
+        Container.BindFactory<DominoController, DominoFactory>().FromComponentInNewPrefab(DominoPrefab);
         Container.BindFactory<NonPlayableDominoFallingDetector, NonPlayableDominoFallingDetectorFactory>().FromComponentInNewPrefab(NonPlayableDominoFallingDetectorPrefab);
     }
 }

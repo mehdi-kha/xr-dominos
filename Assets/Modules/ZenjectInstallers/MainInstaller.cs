@@ -10,7 +10,7 @@ public class MainInstaller : ScriptableObjectInstaller<MainInstaller>
     {
         Container.BindInterfacesAndSelfTo<SceneSetupModel>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
-        Container.BindFactory<BowlController, BowlFactory>().FromComponentInNewPrefab(BowlPrefab);
+        Container.BindFactory<DominosController, DominosFactory>().FromComponentInNewPrefab(BowlPrefab);
         Container.BindFactory<NonPlayableDominoFallingDetector, NonPlayableDominoFallingDetectorFactory>().FromComponentInNewPrefab(NonPlayableDominoFallingDetectorPrefab);
     }
 }

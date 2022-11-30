@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 1313523278}
   - component: {fileID: 1313523277}
   m_Layer: 0
-  m_Name: BowlSpawner
+  m_Name: DominosAndBowlSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

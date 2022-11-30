@@ -2,6 +2,7 @@ using Oculus.Interaction;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(IPointable))]
 public class DominoController : MonoBehaviour
@@ -13,6 +14,8 @@ public class DominoController : MonoBehaviour
     [SerializeField] private string _dissolveAnimationTrigger = "DissolveDomino";
     [SerializeField] private string _showupAnimationTrigger = "ShowDomino";
     [SerializeField] private Rigidbody _rigidBody;
+    public Action<DominoController> OnGrabbed;
+    public Action<DominoController> OnReleased;
 
     private IPointable _pointable;
 
@@ -31,12 +34,12 @@ public class DominoController : MonoBehaviour
     {
         if (pointerEvent.Type == PointerEventType.Select)
         {
-            Debug.Log("On Select");
+            OnGrabbed?.Invoke(this);
         }
 
         if (pointerEvent.Type == PointerEventType.Unselect)
         {
-            Debug.Log("On Unselect");
+            OnReleased?.Invoke(this);
         }
     }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 
-public class BowlController : MonoBehaviour
+public class DominosController : MonoBehaviour
 {
     public IDesk CorrespondingDesk;
     [Inject] private ISceneSetupModel _sceneSetupModel;
@@ -21,10 +21,11 @@ public class BowlController : MonoBehaviour
 
     private ObjectPool<DominoController> _dominoPool;
     private List<DominoController> _spawnedDominos = new List<DominoController>();
+    private List<DominoController> _dominosInHand = new();
 
     private void Awake()
     {
-        _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, OnReleaseToPool, null, true, 20);
+        _dominoPool = new ObjectPool<DominoController>(CreateDomino, OnTakeDominoFromPool, OnReleaseToPool, OnDominoDestroyed, true, 20);
         _sceneSetupModel.GameStarted += OnGameStarted;
         _gameModel.FirstNonPlayableDominoFell += OnFirstNonPlayableDominoFell;
         _gameModel.ShouldLoadNextLevel += OnShouldLoadNextLevel;
@@ -37,6 +38,12 @@ public class BowlController : MonoBehaviour
         _gameModel.FirstNonPlayableDominoFell -= OnFirstNonPlayableDominoFell;
         _gameModel.ShouldLoadNextLevel -= OnShouldLoadNextLevel;
         _gameModel.ShouldRestartGame -= OnShouldRestartGame;
+    }
+
+    private void OnDominoDestroyed(DominoController dominoController)
+    {
+        dominoController.OnGrabbed -= OnDominoGrabbed;
+        dominoController.OnReleased -= OnDominoReleased;
     }
 
     private void OnShouldRestartGame(IDesk desk)
@@ -78,6 +85,7 @@ public class BowlController : MonoBehaviour
 
         MakeAllPlayableDominosNonInteractable();
         DissolveDominosInBowl();
+        DissolveDominosInHand();
     }
 
     private void MakeAllPlayableDominosNonInteractable()
@@ -93,6 +101,14 @@ public class BowlController : MonoBehaviour
         foreach (var domino in _bowlLeavingDominosController.DominosInBowl)
         {
             domino.Value.Hide();
+        }
+    }
+
+    private void DissolveDominosInHand()
+    {
+        foreach (var domino in _dominosInHand)
+        {
+            domino.Hide();
         }
     }
 
@@ -119,7 +135,20 @@ public class BowlController : MonoBehaviour
 
     private DominoController CreateDomino()
     {
-        return Instantiate(_dominoPrefab);
+        var dominoController = Instantiate(_dominoPrefab);
+        dominoController.OnGrabbed += OnDominoGrabbed;
+        dominoController.OnReleased += OnDominoReleased;
+        return dominoController;
+    }
+
+    private void OnDominoGrabbed(DominoController dominoController)
+    {
+        _dominosInHand.Add(dominoController);
+    }
+
+    private void OnDominoReleased(DominoController dominoController)
+    {
+        _dominosInHand.Remove(dominoController);
     }
 
     private void OnTakeDominoFromPool(DominoController domino)

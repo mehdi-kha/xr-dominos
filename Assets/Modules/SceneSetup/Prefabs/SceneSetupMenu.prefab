@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _visuals: {fileID: 3136422701475643931}
+  _heightOffsetUserHeadMenu: 0.2
   _noRoomConfiguredPanel: {fileID: 3136422701475643931}
   _quitButton: {fileID: 4156485753811519473}
   _continueButton: {fileID: 7553742528075062223}

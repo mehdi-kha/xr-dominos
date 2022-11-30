@@ -8,6 +8,7 @@ public class GameModel : IGameModel
     private Dictionary<IDesk, bool> _isFallingCountdownFinished = new();
     private Dictionary<IDesk, bool> _haveAllNonPlayableDominosFallenDown = new();
     private Dictionary<IDesk, int> _currentScore = new();
+    private Dictionary<IDesk, IList<IBowl>> _bowls = new();
     public GameMode CurrentGameMode
     {
         get => _currentGameMode;
@@ -55,6 +56,8 @@ public class GameModel : IGameModel
 
     public IReadOnlyDictionary<IDesk, int> CurrentScore => _currentScore;
 
+    public IReadOnlyDictionary<IDesk, IList<IBowl>> Bowls => _bowls;
+
     public void SetCurrentScore(IDesk desk, int score)
     {
         _currentScore[desk] = score;
@@ -96,5 +99,22 @@ public class GameModel : IGameModel
     public void TriggerLevelSucceded(IDesk desk)
     {
         LevelSucceeded?.Invoke(desk);
+    }
+
+    public void AddBowl(IDesk desk, IBowl bowl)
+    {
+        if (desk == null || bowl == null)
+        {
+            throw new NullReferenceException("Bowl or desk is null");
+        }
+
+        IList<IBowl> bowlsForDesk;
+        if (!_bowls.TryGetValue(desk, out bowlsForDesk))
+        {
+            bowlsForDesk = new List<IBowl>();
+        }
+
+        bowlsForDesk.Add(bowl);
+        _bowls[desk] = bowlsForDesk;
     }
 }

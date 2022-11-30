@@ -1,8 +1,8 @@
 ﻿using Zenject;
 
-class DominosFactory : PlaceholderFactory<DominosController>
+class BowlFactory : PlaceholderFactory<BowlController>
 {
-    public DominosController Create(IDesk desk)
+    public BowlController Create(IDesk desk)
     {
         var bowlController = base.Create();
         bowlController.CorrespondingDesk = desk;

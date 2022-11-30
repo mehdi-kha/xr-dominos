@@ -16,7 +16,7 @@ public class BowlLeavingDominosController : MonoBehaviour
         }
 
         DominoController dominoController;
-        if (!other.TryGetComponent<DominoController>(out dominoController))
+        if (!other.TryGetComponent(out dominoController))
         {
             dominoController = other.GetComponent<DominoControllerRef>().DominoController;
         }

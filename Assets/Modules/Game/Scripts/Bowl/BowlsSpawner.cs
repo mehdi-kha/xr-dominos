@@ -2,10 +2,11 @@ using System.Collections;
 using UnityEngine;
 using Zenject;
 
-public class DominosSpawner : MonoBehaviour
+public class BowlsSpawner : MonoBehaviour
 {
     [Inject] private ISceneSetupModel _sceneSetupModel;
-    [Inject] private DominosFactory _dominosFactory;
+    [Inject] private IGameModel _gameModel;
+    [Inject] private BowlFactory _bowlsFactory;
     private WaitForEndOfFrame _waitForEndOfFrame = new WaitForEndOfFrame();
 
     private void Awake()
@@ -25,10 +26,11 @@ public class DominosSpawner : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnBowlOnNextFrame(IDesk desk)
     {
-        var dominosController = _dominosFactory.Create(desk);
+        var bowl = _bowlsFactory.Create(desk);
         yield return _waitForEndOfFrame;
-        dominosController.transform.parent = desk.Transform;
-        dominosController.transform.localPosition = desk.GetBowlSpawningLocalPosition();
-        dominosController.transform.parent = null;
+        bowl.transform.parent = desk.Transform;
+        bowl.transform.localPosition = desk.GetBowlSpawningLocalPosition();
+        bowl.transform.parent = null;
+        _gameModel.AddBowl(desk, bowl);
     }
 }

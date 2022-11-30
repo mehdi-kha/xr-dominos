@@ -16,6 +16,7 @@ public interface IGameModel
     public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown { get; }
     public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished { get; }
     public IReadOnlyDictionary<IDesk, int> CurrentScore { get; }
+    public IReadOnlyDictionary<IDesk, IList<IBowl>> Bowls { get; }
     public void TriggerLevelSucceded(IDesk desk);
     public void TriggerLevelFailed(IDesk desk);
     public void LoadNextLevel(IDesk desk);
@@ -24,4 +25,5 @@ public interface IGameModel
     public void SetIsFallingCOuntdownFinished(IDesk desk, bool isFinished);
     public void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen);
     public void SetCurrentScore(IDesk desk, int score);
+    public void AddBowl(IDesk desk, IBowl bowl);
 }

@@ -2,11 +2,14 @@ using Oculus.Interaction;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 [RequireComponent(typeof(IPointable))]
-public class DominoController : MonoBehaviour
+public class DominoController : MonoBehaviour, IDomino
 {
+    public event Action<DominoController> OnGrabbed;
+    public event Action<DominoController> OnReleased;
+    public IBowl CorrespondingBowl;
+
     [SerializeField] private List<GameObject> _grabInteractables;
     [SerializeField] private ParticleSystem _particleSystem;
     [SerializeField] private GameObject _visuals;
@@ -14,9 +17,6 @@ public class DominoController : MonoBehaviour
     [SerializeField] private string _dissolveAnimationTrigger = "DissolveDomino";
     [SerializeField] private string _showupAnimationTrigger = "ShowDomino";
     [SerializeField] private Rigidbody _rigidBody;
-    public Action<DominoController> OnGrabbed;
-    public Action<DominoController> OnReleased;
-
     private IPointable _pointable;
 
     private void Awake()
@@ -70,5 +70,20 @@ public class DominoController : MonoBehaviour
     {
         _animator.SetTrigger(_showupAnimationTrigger);
         _rigidBody.isKinematic = false;
+    }
+
+    public void SetActive(bool shouldBeActive)
+    {
+        gameObject.SetActive(shouldBeActive);
+    }
+
+    public void SetPosition(Vector3 worldPosition)
+    {
+        transform.position = worldPosition;
+    }
+
+    public void SetBowl(IBowl bowl)
+    {
+        CorrespondingBowl = bowl;
     }
 }

@@ -5,11 +5,14 @@ using Zenject;
 public class StartGameMenuController : MenuController
 {
     [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _startGameButton;
+    [SerializeField] private PointerInteractable<PokeInteractor, PokeInteractable> _startTutorialButton;
     private void Awake()
     {
         _sceneSetupModel.DeskDetected += OnDeskDetected;
         _startGameButton.WhenPointerEventRaised += OnStartGameButtonPointerEvent;
-        _sceneSetupModel.GameStarted += OnGameStarted;
+        _startTutorialButton.WhenPointerEventRaised += OnTutorialButtonPointerEvent;
+        _sceneSetupModel.GameStarted += HideMenu;
+        _sceneSetupModel.TutorialStarted += HideMenu;
         _sceneSetupModel.UserFootprintsStatusChanged += OnUserFootprintStatusChanged;
         if (!_sceneSetupModel.IsUserOnFootsteps)
         {
@@ -21,7 +24,9 @@ public class StartGameMenuController : MenuController
     {
         _sceneSetupModel.DeskDetected -= OnDeskDetected;
         _startGameButton.WhenPointerEventRaised -= OnStartGameButtonPointerEvent;
-        _sceneSetupModel.GameStarted -= OnGameStarted;
+        _startTutorialButton.WhenPointerEventRaised -= OnTutorialButtonPointerEvent;
+        _sceneSetupModel.GameStarted -= HideMenu;
+        _sceneSetupModel.TutorialStarted -= HideMenu;
         _sceneSetupModel.UserFootprintsStatusChanged -= OnUserFootprintStatusChanged;
     }
 
@@ -42,7 +47,7 @@ public class StartGameMenuController : MenuController
         ShowMenu();
     }
 
-    private void OnGameStarted(IDesk desk)
+    private void HideMenu(IDesk desk)
     {
         HideMenu();
     }
@@ -55,6 +60,16 @@ public class StartGameMenuController : MenuController
         }
 
         _sceneSetupModel.StartGameForAllDesks();
+    }
+
+    private void OnTutorialButtonPointerEvent(PointerEvent obj)
+    {
+        if (obj.Type != PointerEventType.Select)
+        {
+            return;
+        }
+
+        _sceneSetupModel.StartTutorialForAllDesks();
     }
 
     private void OnDeskDetected(DeskController deskController)

@@ -4,20 +4,20 @@ using Zenject;
 public abstract class MenuController : MonoBehaviour
 {
     [Inject] protected ISceneSetupModel _sceneSetupModel;
-    [SerializeField] protected GameObject _visuals;
+    [SerializeField] protected Animator _visuals;
     [SerializeField] protected float _heightOffsetUserHeadMenu = 0.2f;
+    [SerializeField] protected string _showAnimationTrigger = "ShowMenu";
+    [SerializeField] protected string _hideAnimationTrigger = "HideMenu";
 
     protected virtual void ShowMenu()
     {
         MakeHeightMatchUserHeight();
-
-        // TODO maybe make it appear/disappear by triggering an animation instead
-        _visuals.SetActive(true);
+        _visuals.SetTrigger(_showAnimationTrigger);
     }
 
     protected void HideMenu()
     {
-        _visuals.SetActive(false);
+        _visuals.SetTrigger(_hideAnimationTrigger);
     }
 
     protected void MakeHeightMatchUserHeight()

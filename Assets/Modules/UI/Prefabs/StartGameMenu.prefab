@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6930621236250571335}
+  - component: {fileID: 1374295933653619197}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -34,6 +35,26 @@ Transform:
   m_Father: {fileID: 1938575641385302382}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1374295933653619197
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6147710099579286282}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bdeeb9ffdbc21c142a84d7e2e49a77f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8836679873742746216
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,7 +86,7 @@ Transform:
   m_Children:
   - {fileID: 6930621236250571335}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4004302726771019912
 MonoBehaviour:
@@ -79,8 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dad5c4c660133374e8660e5893a18f4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _visuals: {fileID: 6147710099579286282}
+  _visuals: {fileID: 1374295933653619197}
   _heightOffsetUserHeadMenu: 0.2
+  _showAnimationTrigger: ShowMenu
+  _hideAnimationTrigger: HideMenu
   _startGameButton: {fileID: 5150165044641937120}
   _startTutorialButton: {fileID: 3139040073202944776}
 --- !u!1001 &2012695650102624578

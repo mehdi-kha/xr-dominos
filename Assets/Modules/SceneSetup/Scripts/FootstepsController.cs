@@ -6,7 +6,7 @@ using Zenject;
 public class FootstepsController : MonoBehaviour
 {
     [Inject] private ISceneSetupModel _sceneSetupModel;
-    [Inject] private RendererVisibilityUtil _rendererVisibilityUtil;
+    [Inject] private VisibilityUtil _visibilityUtil;
     [SerializeField] private string _playerColliderTag = "MainCamera";
     [SerializeField] private Material _footPrintsMaterial;
     [SerializeField] private ColorReference _colorWhenUserOver;
@@ -23,7 +23,7 @@ public class FootstepsController : MonoBehaviour
     {
         foreach (var panel in _panels)
         {
-            _rendererVisibilityUtil.ShowTmpText(panel);
+            _visibilityUtil.ShowTmpText(panel);
         }
     }
 
@@ -31,7 +31,7 @@ public class FootstepsController : MonoBehaviour
     {
         foreach (var panel in _panels)
         {
-            _rendererVisibilityUtil.HideTmpText(panel);
+            _visibilityUtil.HideTmpText(panel);
         }
     }
 

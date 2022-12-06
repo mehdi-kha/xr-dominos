@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
-public class RendererVisibilityUtil
+public class VisibilityUtil
 {
     public enum TransitionMethod
     {

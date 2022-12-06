@@ -34,7 +34,7 @@ public class StartGameMenuController : MenuController
     {
         if (!_sceneSetupModel.HaveDesksBeenDetected)
         {
-            _visuals.SetActive(false);
+            HideMenu();
             return;
         }
 

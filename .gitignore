@@ -81,3 +81,4 @@ Assets/Resources/OculusPlatformSettings.asset.meta
 
 # ScreenshotCompanion plugin from the asset store
 /[Aa]ssets/Plugins/ScreenshotCompanion*
+/Screenshots*

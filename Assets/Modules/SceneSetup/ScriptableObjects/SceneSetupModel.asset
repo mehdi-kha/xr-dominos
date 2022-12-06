@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88f727c532a8c844881b3fd59e518bb, type: 3}
+  m_Name: SceneSetupModel
+  m_EditorClassIdentifier: 
+  _defaultPlayerHeadTag: MainCamera
+  _tutorialSlideData:
+  - {fileID: 11400000, guid: 83ec865e7d0eb2d4eb56975bed1f6610, type: 2}
+  - {fileID: 11400000, guid: f74ea281a54c53c46be0603fe96eb1dd, type: 2}
+  - {fileID: 11400000, guid: cc77033f9007a704bb7cb2188c41fb39, type: 2}
+  - {fileID: 11400000, guid: efc5cbc07b58f2e4b8554be6cc6ca87e, type: 2}

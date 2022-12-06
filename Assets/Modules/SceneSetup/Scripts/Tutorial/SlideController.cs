@@ -12,7 +12,9 @@ public class SlideController : MonoBehaviour
     {
         _title.text = slideData.Title;
         _description.text = slideData.Text;
+        _image.enabled = false;
         _image.material.mainTexture = slideData.Image;
+        _image.enabled = true;
         _visuals.SetActive(true);
     }
 

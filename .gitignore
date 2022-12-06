@@ -78,3 +78,6 @@ Assets/Resources/OculusPlatformSettings.asset.meta
 
 # Ignore the TextMeshPro imported assets
 /[Aa]ssets/TextMesh Pro/*
+
+# ScreenshotCompanion plugin from the asset store
+/[Aa]ssets/Plugins/ScreenshotCompanion*

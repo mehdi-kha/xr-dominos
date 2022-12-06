@@ -1,4 +1,4 @@
-using System;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
@@ -6,15 +6,33 @@ using Zenject;
 public class FootstepsController : MonoBehaviour
 {
     [Inject] private ISceneSetupModel _sceneSetupModel;
+    [Inject] private RendererVisibilityUtil _rendererVisibilityUtil;
     [SerializeField] private string _playerColliderTag = "MainCamera";
     [SerializeField] private Material _footPrintsMaterial;
     [SerializeField] private ColorReference _colorWhenUserOver;
+    [SerializeField] private TextMeshProUGUI[] _panels;
     private Color _colorWhenUserNotOver;
 
     private void Awake()
     {
         _colorWhenUserNotOver = _footPrintsMaterial.color;
         _sceneSetupModel.GameStarted += OnGameStarted;
+    }
+
+    private void ShowPanels()
+    {
+        foreach (var panel in _panels)
+        {
+            _rendererVisibilityUtil.ShowTmpText(panel);
+        }
+    }
+
+    private void HidePanels()
+    {
+        foreach (var panel in _panels)
+        {
+            _rendererVisibilityUtil.HideTmpText(panel);
+        }
     }
 
     private void OnGameStarted(IDesk desk)
@@ -34,6 +52,7 @@ public class FootstepsController : MonoBehaviour
         {
             _sceneSetupModel.IsUserOnFootsteps = true;
             _footPrintsMaterial.color = _colorWhenUserOver.Value;
+            HidePanels();
         }
     }
 
@@ -43,6 +62,7 @@ public class FootstepsController : MonoBehaviour
         {
             _sceneSetupModel.IsUserOnFootsteps = false;
             _footPrintsMaterial.color = _colorWhenUserNotOver;
+            ShowPanels();
         }
     }
 }

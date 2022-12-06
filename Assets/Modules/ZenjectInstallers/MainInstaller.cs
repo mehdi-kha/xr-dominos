@@ -15,5 +15,6 @@ public class MainInstaller : ScriptableObjectInstaller<MainInstaller>
         Container.BindFactory<BowlController, BowlFactory>().FromComponentInNewPrefab(BowlPrefab);
         Container.BindFactory<DominoController, DominoFactory>().FromComponentInNewPrefab(DominoPrefab);
         Container.BindFactory<NonPlayableDominoFallingDetector, NonPlayableDominoFallingDetectorFactory>().FromComponentInNewPrefab(NonPlayableDominoFallingDetectorPrefab);
+        Container.BindInterfacesAndSelfTo<RendererVisibilityUtil>().AsSingle();
     }
 }

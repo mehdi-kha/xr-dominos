@@ -7,22 +7,19 @@ using UnityEngine.Splines;
 using Zenject;
 
 [Serializable]
-public struct Level
+public struct LevelStruct
 {
     public int Number;
-    public SplineContainer SplineContainerPrefab;
+    public GameLevel GameLevel;
 }
 public class NonPlayableDominosSpawner : MonoBehaviour
 {
-    [SerializeField] private List<Level> _levels;
+    [SerializeField] private List<LevelStruct> _levels;
     [SerializeField] private GameObject _nonPlayableDominoPrefab;
     [SerializeField] private float _distanceBetweenDominos = 0.05f;
     [Inject] private ISceneSetupModel _sceneSetupModel;
     [Inject] private IGameModel _gameModel;
     [Range(0, 1)]
-    [SerializeField] private float _holeStartRelativeDistance = 0.4f;
-    [Range(0, 1)]
-    [SerializeField] private float _holeEndRelativeDistance = 0.6f;
     [SerializeField] private float _verticalSpawningOffset = 0.05f;
 
     private ObjectPool<GameObject> _nonPlayableDominosPool;
@@ -80,9 +77,13 @@ public class NonPlayableDominosSpawner : MonoBehaviour
 
     private void SpawnNonPlayableDominosForLevel(IDesk desk, int level)
     {
-        var correspondingSplineContainerPrefab = GetSplineContainerPrefabForLevel(level);
+        var gameLevel = GetGameLevelForLevel(level);
+        var correspondingSplineContainerPrefab = gameLevel.SplineContainer;
         var spline = SpawnSpline(desk, correspondingSplineContainerPrefab);
         var spawnedDominos = SpawnNonPlayableDominosAlongSpline(spline);
+        var minToDestroy = (int) (gameLevel.MinimumPercentageToDestroy * spawnedDominos.Count);
+        var maxToDestroy = (int) (gameLevel.MaxPercentageToDestroy * spawnedDominos.Count);
+        RandomlyDestroyDominos(spawnedDominos, minToDestroy, maxToDestroy);
         if (!_spawnedNonPlayableDominos.ContainsKey(desk))
         {
             _spawnedNonPlayableDominos[desk] = new List<GameObject>();
@@ -101,9 +102,9 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         _spawnedNonPlayableDominos[desk].Clear();
     }
 
-    private SplineContainer GetSplineContainerPrefabForLevel(int searchedLevel)
+    private GameLevel GetGameLevelForLevel(int searchedLevel)
     {
-        Level foundLevel;
+        LevelStruct foundLevel;
         try
         {
             foundLevel = _levels.First(level => level.Number == searchedLevel);
@@ -111,10 +112,10 @@ public class NonPlayableDominosSpawner : MonoBehaviour
 
         catch (InvalidOperationException e)
         {
-            throw new NullReferenceException("No spline for the level 0 was registered.");
+            throw new NullReferenceException("No GameLevel for the level 0 was registered.");
         }
 
-        return foundLevel.SplineContainerPrefab;
+        return foundLevel.GameLevel;
     }
 
     private SplineContainer SpawnSpline(IDesk deskController, SplineContainer splineContainerPrefab)
@@ -145,12 +146,20 @@ public class NonPlayableDominosSpawner : MonoBehaviour
             domino.transform.position = worldPosition;
             domino.transform.LookAt(worldPosition + tangent, upVector);
             currentRelativePosition += relativeDistanceBetweenDominos;
-            while(currentRelativePosition > _holeStartRelativeDistance && currentRelativePosition < _holeEndRelativeDistance)
-            {
-                currentRelativePosition += relativeDistanceBetweenDominos;
-            }
         }
 
         return spawnedDominos;
+    }
+
+    private void RandomlyDestroyDominos(List<GameObject> dominos, int minToDestroy, int maxToDestroy)
+    {
+        int numToDestroy = UnityEngine.Random.Range(minToDestroy, maxToDestroy + 1);
+
+        for (int i = 0; i < numToDestroy; i++)
+        {
+            int indexToRemove = UnityEngine.Random.Range(0, dominos.Count);
+            Destroy(dominos[indexToRemove]);
+            dominos.RemoveAt(indexToRemove);
+        }
     }
 }

@@ -340,6 +340,14 @@ PrefabInstance:
       propertyPath: m_Spline.m_Knots.Array.data[9].Rotation.value.y
       value: 0.83522695
       objectReference: {fileID: 0}
+    - target: {fileID: 2882668376586189368, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: MaxPercentageToDestroy
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882668376586189368, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: MinimumPercentageToDestroy
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4881680224240465796, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -390,7 +398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7497959400460165503, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
       propertyPath: m_Name
-      value: Level2
+      value: Level1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

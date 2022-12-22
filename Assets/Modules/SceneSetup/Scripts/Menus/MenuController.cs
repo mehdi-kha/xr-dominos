@@ -9,15 +9,19 @@ public abstract class MenuController : MonoBehaviour
     [SerializeField] protected string _showAnimationTrigger = "ShowMenu";
     [SerializeField] protected string _hideAnimationTrigger = "HideMenu";
 
+    protected bool isVisible = true;
+
     protected virtual void ShowMenu()
     {
         MakeHeightMatchUserHeight();
         _visuals.SetTrigger(_showAnimationTrigger);
+        isVisible = true;
     }
 
     protected void HideMenu()
     {
         _visuals.SetTrigger(_hideAnimationTrigger);
+        isVisible = false;
     }
 
     protected void MakeHeightMatchUserHeight()

@@ -1,3 +1,5 @@
+# Feature ideas
+- A timer for each level, the time left decreases as we reach higher levels
 # Project setup
 You should the TextMeshPro assets via Window -> TextMeshPro -> Import TMP Essential Resources
 

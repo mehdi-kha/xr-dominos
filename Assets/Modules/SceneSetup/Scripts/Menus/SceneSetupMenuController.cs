@@ -1,4 +1,5 @@
 using Oculus.Interaction;
+using System;
 using UnityEngine;
 
 public class SceneSetupMenuController : MenuController
@@ -20,6 +21,14 @@ public class SceneSetupMenuController : MenuController
         // Setup buttons
         _quitButton.WhenPointerEventRaised += OnQuitButtonEventRaised;
         _continueButton.WhenPointerEventRaised += OnContinueButtonEventRaised;
+    }
+
+    private void Update()
+    {
+        if (!isVisible)
+        {
+            return;
+        }
 
         MakeHeightMatchUserHeight();
     }

@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2882668376586189368, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: MaxPercentageToDestroy
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882668376586189368, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: MinimumPercentageToKeep
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882668376586189368, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
+      propertyPath: MinimumPercentageToDestroy
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 4881680224240465796, guid: 8b778c3ef09d5794d8641585f4ab1cb2, type: 3}
       propertyPath: m_IsActive
       value: 0

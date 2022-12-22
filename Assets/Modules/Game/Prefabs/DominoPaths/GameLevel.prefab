@@ -108,8 +108,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7497959400460165501}
   - component: {fileID: 1781270059760212239}
+  - component: {fileID: 2882668376586189368}
   m_Layer: 0
-  m_Name: NonPlayableDominosPath
+  m_Name: GameLevel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,3 +257,18 @@ MonoBehaviour:
           w: 0.90507895
     m_Length: -1
     m_Closed: 0
+--- !u!114 &2882668376586189368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7497959400460165503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de4a4ed7d46158c4fbc4dcaa2c0243f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SplineContainer: {fileID: 1781270059760212239}
+  MinimumPercentageToKeep: 0
+  MinimumPercentageToDestroy: 0

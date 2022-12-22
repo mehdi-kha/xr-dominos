@@ -46,13 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levels:
   - Number: 0
-    SplineContainerPrefab: {fileID: 3639231165122883988, guid: d4614a88a5af34945a9bad9940dc6606, type: 3}
+    GameLevel: {fileID: 159940757737575075, guid: d4614a88a5af34945a9bad9940dc6606, type: 3}
   - Number: 1
-    SplineContainerPrefab: {fileID: 3639231165122883988, guid: a7940aeacf68ae74b918c49a15ad1fd0, type: 3}
+    GameLevel: {fileID: 159940757737575075, guid: a7940aeacf68ae74b918c49a15ad1fd0, type: 3}
   - Number: 2
-    SplineContainerPrefab: {fileID: 3021136946168715502, guid: a3c2bebf0b4c55e41905ff3be5c5d07e, type: 3}
+    GameLevel: {fileID: 1825119176978725849, guid: a3c2bebf0b4c55e41905ff3be5c5d07e, type: 3}
   _nonPlayableDominoPrefab: {fileID: 1704727383277259978, guid: 4efb00c1a8217004da44365589c245b8, type: 3}
   _distanceBetweenDominos: 0.05
-  _holeStartRelativeDistance: 0.4
-  _holeEndRelativeDistance: 0.6
   _verticalSpawningOffset: 0.05

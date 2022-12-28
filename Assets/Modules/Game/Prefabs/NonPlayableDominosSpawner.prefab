@@ -51,6 +51,6 @@ MonoBehaviour:
     GameLevel: {fileID: 159940757737575075, guid: a7940aeacf68ae74b918c49a15ad1fd0, type: 3}
   - Number: 2
     GameLevel: {fileID: 1825119176978725849, guid: a3c2bebf0b4c55e41905ff3be5c5d07e, type: 3}
-  _nonPlayableDominoPrefab: {fileID: 1704727383277259978, guid: 4efb00c1a8217004da44365589c245b8, type: 3}
+  _nonPlayableDominoPrefab: {fileID: 7281980344518659169, guid: 4efb00c1a8217004da44365589c245b8, type: 3}
   _distanceBetweenDominos: 0.05
   _verticalSpawningOffset: 0.05

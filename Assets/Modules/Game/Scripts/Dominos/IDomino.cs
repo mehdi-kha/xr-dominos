@@ -12,4 +12,8 @@ public interface IDomino
     public void SetActive(bool shouldBeActive);
     public void SetPosition(Vector3 worldPosition);
     public void SetBowl(IBowl bowl);
+    public bool HasFallenDown { get; }
+    public Transform Transform { get; }
+    public bool IsPlayableDomino { get; }
+    public IDesk CorrespondingDesk { get; set; }
 }

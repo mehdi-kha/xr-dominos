@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1432990725021932123, guid: 6016f2ddc8f32d64d88027ee8e73d54c, type: 3}
+      propertyPath: _isPlayableDomino
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1474805152662197163, guid: 6016f2ddc8f32d64d88027ee8e73d54c, type: 3}
       propertyPath: m_TagString
       value: NonPlayableDomino

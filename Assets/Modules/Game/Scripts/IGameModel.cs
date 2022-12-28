@@ -11,10 +11,10 @@ public interface IGameModel
     public event Action<IDesk> LevelFailed;
     public event Action<IDesk> ShouldLoadNextLevel;
     public event Action<IDesk> ShouldRestartGame;
+    public event Action<IDomino> DominoFellDown;
     public GameMode CurrentGameMode { get; set; }
     public IReadOnlyDictionary<IDesk, bool> HasAtLeastOneNonPlayableDominoFallen { get; }
     public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown { get; }
-    public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished { get; }
     public IReadOnlyDictionary<IDesk, int> CurrentScore { get; }
     public IReadOnlyDictionary<IDesk, IList<IBowl>> Bowls { get; }
     public void TriggerLevelSucceded(IDesk desk);
@@ -22,8 +22,11 @@ public interface IGameModel
     public void LoadNextLevel(IDesk desk);
     public void RestartGame(IDesk desk);
     public void SetHasAtLeastOneNonPlayableDominoFallen(IDesk desk, bool condition);
-    public void SetIsFallingCOuntdownFinished(IDesk desk, bool isFinished);
-    public void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen);
+    public void SetIsFallingCountdownFinished(IDesk desk, bool isFinished);
     public void SetCurrentScore(IDesk desk, int score);
     public void AddBowl(IDesk desk, IBowl bowl);
+    public void SetDominoFellDown(IDomino domino);
+    public void AddSpawnedNonPlayableDominos(IDesk desk, List<IDomino> dominos);
+    public void ClearNonPlayableDominos(IDesk desk);
+    public List<IDomino> GetNonPlayableDominosForDesk(IDesk desk);
 }

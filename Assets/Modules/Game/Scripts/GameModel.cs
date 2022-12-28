@@ -3,12 +3,24 @@ using System.Collections.Generic;
 
 public class GameModel : IGameModel
 {
+    public event Action<GameMode> GameModeChanged;
+    public event Action<IDesk> FirstNonPlayableDominoFell;
+    public event Action<IDesk> AllNonPlayableDominosFell;
+    public event Action<IDesk> FallingCountdownFinished;
+    public event Action<IDesk> LevelSucceeded;
+    public event Action<IDesk> LevelFailed;
+    public event Action<IDesk> ShouldLoadNextLevel;
+    public event Action<IDesk> ShouldRestartGame;
+    public event Action<IDomino> DominoFellDown;
+
     private GameMode _currentGameMode;
     private Dictionary<IDesk, bool> _hasFirstNonPlayableDominoFallen = new();
     private Dictionary<IDesk, bool> _isFallingCountdownFinished = new();
     private Dictionary<IDesk, bool> _haveAllNonPlayableDominosFallenDown = new();
     private Dictionary<IDesk, int> _currentScore = new();
     private Dictionary<IDesk, IList<IBowl>> _bowls = new();
+    private Dictionary<IDesk, List<IDomino>> _spawnedNonPlayableDominos = new();
+
     public GameMode CurrentGameMode
     {
         get => _currentGameMode;
@@ -31,20 +43,29 @@ public class GameModel : IGameModel
         _hasFirstNonPlayableDominoFallen[desk] = condition;
     }
 
-    public IReadOnlyDictionary<IDesk, bool> IsFallingCountdownFinished => _isFallingCountdownFinished;
-
-    public void SetIsFallingCOuntdownFinished(IDesk desk, bool isFinished)
+    public void SetIsFallingCountdownFinished(IDesk desk, bool isFinished)
     {
-        if (isFinished)
+        if (!isFinished)
         {
-            FallingCountdownFinished?.Invoke(desk);
+            return;
         }
+
+        // Check the dominos status, and set the right status
+        SetHaveAllNonPlayableDominosFallen(desk, CheckDominosFallenStatus(desk));
+
+        FallingCountdownFinished?.Invoke(desk);
         _isFallingCountdownFinished[desk] = isFinished;
     }
 
     public IReadOnlyDictionary<IDesk, bool> HaveAllNonPlayableDominosFallenDown => _haveAllNonPlayableDominosFallenDown;
 
-    public void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen)
+    private bool CheckDominosFallenStatus(IDesk desk)
+    {
+        var dominos = _spawnedNonPlayableDominos[desk];
+        return dominos.TrueForAll(domino => domino.HasFallenDown);
+    }
+
+    private void SetHaveAllNonPlayableDominosFallen(IDesk desk, bool haveAllFallen)
     {
         if (haveAllFallen)
         {
@@ -58,24 +79,30 @@ public class GameModel : IGameModel
 
     public IReadOnlyDictionary<IDesk, IList<IBowl>> Bowls => _bowls;
 
+    public List<IDomino> GetNonPlayableDominosForDesk(IDesk desk)
+    {
+        return _spawnedNonPlayableDominos[desk];
+    }
+
+    public void AddSpawnedNonPlayableDominos(IDesk desk, List<IDomino> dominos)
+    {
+        if (!_spawnedNonPlayableDominos.ContainsKey(desk))
+        {
+            _spawnedNonPlayableDominos[desk] = new();
+        }
+        
+        _spawnedNonPlayableDominos[desk].AddRange(dominos);
+    }
+
     public void SetCurrentScore(IDesk desk, int score)
     {
         _currentScore[desk] = score;
     }
 
-    public event Action<GameMode> GameModeChanged;
-    public event Action<IDesk> FirstNonPlayableDominoFell;
-    public event Action<IDesk> AllNonPlayableDominosFell;
-    public event Action<IDesk> FallingCountdownFinished;
-    public event Action<IDesk> LevelSucceeded;
-    public event Action<IDesk> LevelFailed;
-    public event Action<IDesk> ShouldLoadNextLevel;
-    public event Action<IDesk> ShouldRestartGame;
-
     private void ResetDataForDesk(IDesk desk)
     {
         SetHasAtLeastOneNonPlayableDominoFallen(desk, false);
-        SetIsFallingCOuntdownFinished(desk, false);
+        SetIsFallingCountdownFinished(desk, false);
         SetHaveAllNonPlayableDominosFallen(desk, false);
     }
 
@@ -116,5 +143,15 @@ public class GameModel : IGameModel
 
         bowlsForDesk.Add(bowl);
         _bowls[desk] = bowlsForDesk;
+    }
+
+    public void SetDominoFellDown(IDomino domino)
+    {
+        DominoFellDown?.Invoke(domino);
+    }
+
+    public void ClearNonPlayableDominos(IDesk desk)
+    {
+        _spawnedNonPlayableDominos[desk].Clear();
     }
 }

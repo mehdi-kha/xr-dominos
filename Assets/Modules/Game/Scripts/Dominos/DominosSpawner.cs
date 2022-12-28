@@ -131,6 +131,7 @@ public class DominosSpawner : MonoBehaviour
         var dominoController = _dominosFactory.Create();
         dominoController.OnGrabbed += OnDominoGrabbed;
         dominoController.OnReleased += OnDominoReleased;
+        dominoController.GameModel = _gameModel;
         return dominoController;
     }
 

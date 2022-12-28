@@ -15,15 +15,14 @@ public struct LevelStruct
 public class NonPlayableDominosSpawner : MonoBehaviour
 {
     [SerializeField] private List<LevelStruct> _levels;
-    [SerializeField] private GameObject _nonPlayableDominoPrefab;
+    [SerializeField] private DominoController _nonPlayableDominoPrefab;
     [SerializeField] private float _distanceBetweenDominos = 0.05f;
     [Inject] private ISceneSetupModel _sceneSetupModel;
     [Inject] private IGameModel _gameModel;
     [Range(0, 1)]
     [SerializeField] private float _verticalSpawningOffset = 0.05f;
 
-    private ObjectPool<GameObject> _nonPlayableDominosPool;
-    private Dictionary<IDesk, List<GameObject>> _spawnedNonPlayableDominos = new();
+    private ObjectPool<IDomino> _nonPlayableDominosPool;
 
     private void Awake()
     {
@@ -31,7 +30,7 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         _gameModel.ShouldLoadNextLevel += OnShouldLoadNextLevel;
         _gameModel.ShouldRestartGame += OnShouldRestartGame;
 
-        _nonPlayableDominosPool = new ObjectPool<GameObject>(CreateDomino, OnTakeDominoFromPool, OnReleaseDominoToPool, null, true, 30);
+        _nonPlayableDominosPool = new ObjectPool<IDomino>(CreateDomino, OnTakeDominoFromPool, OnReleaseDominoToPool, null, true, 30);
     }
 
     private void OnDestroy()
@@ -41,19 +40,21 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         _gameModel.ShouldRestartGame -= OnShouldRestartGame;
     }
 
-    private GameObject CreateDomino()
+    private IDomino CreateDomino()
     {
         var instance = Instantiate(_nonPlayableDominoPrefab);
         instance.SetActive(false);
+        instance.GameModel = _gameModel;
         return instance;
     }
 
-    private void OnTakeDominoFromPool(GameObject domino)
+    private void OnTakeDominoFromPool(IDomino domino)
     {
+        domino.Transform.rotation = Quaternion.identity;
         domino.SetActive(true);
     }
 
-    private void OnReleaseDominoToPool(GameObject domino)
+    private void OnReleaseDominoToPool(IDomino domino)
     {
         domino.SetActive(false);
     }
@@ -84,22 +85,24 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         var minToDestroy = (int) (gameLevel.MinimumPercentageToDestroy * spawnedDominos.Count);
         var maxToDestroy = (int) (gameLevel.MaxPercentageToDestroy * spawnedDominos.Count);
         RandomlyDestroyDominos(spawnedDominos, minToDestroy, maxToDestroy);
-        if (!_spawnedNonPlayableDominos.ContainsKey(desk))
+
+        // Set the dominos desk
+        foreach (var domino in spawnedDominos)
         {
-            _spawnedNonPlayableDominos[desk] = new List<GameObject>();
+            domino.CorrespondingDesk = desk;
         }
 
-        _spawnedNonPlayableDominos[desk].AddRange(spawnedDominos);
+        _gameModel.AddSpawnedNonPlayableDominos(desk, spawnedDominos);
     }
 
     private void DespawnNonPlayableDominosForDesk(IDesk desk)
     {
-        var dominos = _spawnedNonPlayableDominos[desk];
+        var dominos = _gameModel.GetNonPlayableDominosForDesk(desk);
         foreach (var domino in dominos)
         {
             _nonPlayableDominosPool.Release(domino);
         }
-        _spawnedNonPlayableDominos[desk].Clear();
+        _gameModel.ClearNonPlayableDominos(desk);
     }
 
     private GameLevel GetGameLevelForLevel(int searchedLevel)
@@ -132,9 +135,9 @@ public class NonPlayableDominosSpawner : MonoBehaviour
         return spline;
     }
 
-    private List<GameObject> SpawnNonPlayableDominosAlongSpline(SplineContainer spline)
+    private List<IDomino> SpawnNonPlayableDominosAlongSpline(SplineContainer spline)
     {
-        var spawnedDominos = new List<GameObject>();
+        var spawnedDominos = new List<IDomino>();
         float currentRelativePosition = 0;
         var splineLength = spline.CalculateLength();
         var relativeDistanceBetweenDominos = _distanceBetweenDominos / splineLength;
@@ -143,22 +146,23 @@ public class NonPlayableDominosSpawner : MonoBehaviour
             spline.Evaluate(currentRelativePosition, out var worldPosition, out var tangent, out var upVector);
             var domino = _nonPlayableDominosPool.Get();
             spawnedDominos.Add(domino);
-            domino.transform.position = worldPosition;
-            domino.transform.LookAt(worldPosition + tangent, upVector);
+            domino.Transform.position = worldPosition;
+            domino.Transform.LookAt(worldPosition + tangent, upVector);
             currentRelativePosition += relativeDistanceBetweenDominos;
         }
 
         return spawnedDominos;
     }
 
-    private void RandomlyDestroyDominos(List<GameObject> dominos, int minToDestroy, int maxToDestroy)
+    private void RandomlyDestroyDominos(List<IDomino> dominos, int minToDestroy, int maxToDestroy)
     {
         int numToDestroy = UnityEngine.Random.Range(minToDestroy, maxToDestroy + 1);
 
         for (int i = 0; i < numToDestroy; i++)
         {
             int indexToRemove = UnityEngine.Random.Range(0, dominos.Count);
-            Destroy(dominos[indexToRemove]);
+
+            _nonPlayableDominosPool.Release(dominos[indexToRemove]);
             dominos.RemoveAt(indexToRemove);
         }
     }

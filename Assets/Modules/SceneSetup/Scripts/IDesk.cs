@@ -25,4 +25,9 @@ public interface IDesk
     ///     Make the desk appear.
     /// </summary>
     public void Show();
+
+    /// <summary>
+    ///     The bowl associated to this desk
+    /// </summary>
+    public IBowl Bowl { get; set; }
 }

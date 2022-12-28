@@ -6,6 +6,7 @@ class BowlFactory : PlaceholderFactory<BowlController>
     {
         var bowlController = base.Create();
         bowlController.CorrespondingDesk = desk;
+        desk.Bowl = bowlController;
         return bowlController;
     }
 }

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using Zenject;
 
-class NonPlayableDominoFallingDetectorSpawner : MonoBehaviour
+class NonPlayableDominoFallTimerSpawner : MonoBehaviour
 {
-    [Inject] private NonPlayableDominoFallingDetectorFactory _factory;
+    [Inject] private NonPlayableDominoFallTimerFactory _factory;
     [Inject] private ISceneSetupModel _sceneSetupModel;
 
     private void Awake()

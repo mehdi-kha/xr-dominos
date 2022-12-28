@@ -17,6 +17,9 @@ public class DeskController : MonoBehaviour, IDesk
     public Vector3 CenterTopPosition => transform.position + _boxCollider.bounds.extents.y * transform.up;
     public Bounds Bounds => _meshFilter.mesh.bounds;
     public Transform Transform => transform;
+
+    public IBowl Bowl { get; set; }
+
     [SerializeField] private Renderer _renderer;
     [SerializeField] private float _distanceFromDeskEdge = 0.1f;
     [SerializeField] MeshFilter _meshFilter;

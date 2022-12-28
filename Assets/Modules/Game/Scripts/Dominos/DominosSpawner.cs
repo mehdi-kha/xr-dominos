@@ -20,6 +20,8 @@ public class DominosSpawner : MonoBehaviour
         _gameModel.ShouldLoadNextLevel += SpawnDominosForDesk;
         _gameModel.ShouldRestartGame += OnShouldRestartGame;
         _sceneSetupModel.GameStarted += SpawnDominosForDesk;
+        _gameModel.LevelSucceeded += OnLevelSucceeded;
+        _gameModel.LevelFailed += OnLevelFailed;
     }
 
     private void OnDestroy()
@@ -28,6 +30,18 @@ public class DominosSpawner : MonoBehaviour
         _gameModel.ShouldLoadNextLevel -= SpawnDominosForDesk;
         _gameModel.ShouldRestartGame -= OnShouldRestartGame;
         _sceneSetupModel.GameStarted -= SpawnDominosForDesk;
+        _gameModel.LevelSucceeded -= OnLevelSucceeded;
+        _gameModel.LevelFailed -= OnLevelFailed;
+    }
+
+    private void OnLevelSucceeded(IDesk desk)
+    {
+        DissolveDominosInBowl(desk.Bowl);
+    }
+
+    private void OnLevelFailed(IDesk desk)
+    {
+        DissolveDominosInBowl(desk.Bowl);
     }
 
     private void OnDominoDestroyed(IDomino dominoController)
@@ -62,7 +76,6 @@ public class DominosSpawner : MonoBehaviour
         foreach (var bowl in bowls)
         {
             MakeDominosNonInteractable(_spawnedDominos[bowl]);
-            DissolveDominosInBowl(bowl);
         }
 
         DissolveDominosInHand();
